@@ -1,37 +1,14 @@
 Torque-Control
 ==============
 
-\documentclass[10pt,a4paper,final,oneside]{article}
-\usepackage[latin1]{inputenc}
-\usepackage[english]{babel}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-\usepackage{listings}
+How to use the torque controller
+--------------
 
-\title{Contact Information and Affiliation}
-\author{}
-\date{}
-
-\begin{document}
-\begin{center}
-{\fontsize{20pt}{25pt}\selectfont Readme}
-\end{center}
-\vspace{-0.1cm}
-\hrule
-\vspace{0.1cm}
-\hfill Torque Control of a KUKA youBot Arm
-\vspace{1cm}
-
-
-
-\subsection*{How to use the torque controller}
-
-For the torque controller, the youbot\_oodl with enable torque messages and disable gripper sensor readouts has to be running. The torque controller can then be started with 
+For the torque controller, the youbot_oodl with enable torque messages and disable gripper sensor readouts has to be running. The torque controller can then be started with 
 \begin{lstlisting}[language=bash]
 rosrun  torque_control  torque_control
 \end{lstlisting} 
-if executed from the torque\_control folder. In a launch file the following syntax has to be used:
+if executed from the torque_control folder. In a launch file the following syntax has to be used:
 
 \begin{lstlisting}[language=bash]
 <launch>
@@ -46,13 +23,13 @@ This launches an action server without feedback. As the goal, a trajectory\_msgs
 
 \subsection*{How to use the trajectory generator}
 
-The trajectory\_generator offers 4 different services:
+The trajectory_generator offers 4 different services:
 \begin{itemize}
-\item From\_JS\_2\_JS: generates a joint space trajectory to move all the joints from the start joint space position to the desired end joint space position in the same amount of time.
-\item From\_JS\_2\_CS: generates a joint space trajectory to move the gripper in a straight line from the start joint space position to the Cartesian end position.
-\item From\_CS\_2\_CS: generates a joint space trajectory to move the gripper in a straight line from the Cartesian start to the Cartesian end position.
-\item Circular\_Trajectory: generates a circular joint space trajectory around the center point.
+\item From_JS_2_JS: generates a joint space trajectory to move all the joints from the start joint space position to the desired end joint space position in the same amount of time.
+\item From_JS_2_CS: generates a joint space trajectory to move the gripper in a straight line from the start joint space position to the Cartesian end position.
+\item From_CS_2_CS: generates a joint space trajectory to move the gripper in a straight line from the Cartesian start to the Cartesian end position.
+\item Circular_Trajectory: generates a circular joint space trajectory around the center point.
 \end{itemize}
 
-If feasible trajectories for the input parameters are found, the trajectory is returned in a trajectory\_msgs/JointTrajector message. "JS" in the service name stands for joint space. It expects a fully defined "brics\_actuator::JointPositions" message. The "CS" stands for Cartesian space. It is a "geometry\_msgs::Pose" message. Examples for how the different services are called, can be found in the trajectory\_generator/tester.cpp file.
+If feasible trajectories for the input parameters are found, the trajectory is returned in a trajectory_msgs/JointTrajector message. "JS" in the service name stands for joint space. It expects a fully defined "brics\_actuator::JointPositions" message. The "CS" stands for Cartesian space. It is a "geometry\_msgs::Pose" message. Examples for how the different services are called, can be found in the trajectory\_generator/tester.cpp file.
 \end{document}
