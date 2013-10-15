@@ -1,0 +1,9 @@
+brics_actuator/JointPositions start_pos
+brics_actuator/JointPositions end_pos
+brics_actuator/JointVelocities start_vel
+brics_actuator/JointVelocities end_vel
+float64 max_vel
+float64 max_acc
+---
+trajectory_msgs/JointTrajectory trajectory
+bool feasible

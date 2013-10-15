@@ -1,0 +1,15 @@
+<launch>
+  <node name="ik_test" pkg="ik_test" type="calibrate_joints" />
+  
+  <include file="$(find vrpn_tracker)/launch/optitrackToVicon.launch">
+    <arg name="objectName" value="Base_Trackable" />	
+    <arg name="serverIP" value="192.168.200.5"/>
+  </include>
+  
+  <include file="$(find vrpn_tracker)/launch/optitrackToVicon.launch">
+    <arg name="objectName" value="Gripper_Trackable" />
+    <arg name="serverIP" value="192.168.200.5"/>
+  </include>
+
+</launch>
+

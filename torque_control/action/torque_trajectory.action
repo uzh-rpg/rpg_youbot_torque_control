@@ -1,0 +1,6 @@
+#goal definition
+trajectory_msgs/JointTrajectory trajectory
+---
+#result definition
+---
+#feedback definition

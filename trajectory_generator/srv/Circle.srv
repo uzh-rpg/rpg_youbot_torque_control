@@ -1,0 +1,7 @@
+float64 radius
+float64 omega 
+float64[3] rpy
+float64[3] center
+---
+trajectory_msgs/JointTrajectory trajectory
+bool feasible

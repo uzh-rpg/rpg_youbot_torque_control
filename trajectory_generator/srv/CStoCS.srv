@@ -1,0 +1,9 @@
+geometry_msgs/Pose start_pos
+geometry_msgs/Pose end_pos
+float64 start_vel
+float64 end_vel
+float64 max_vel
+float64 max_acc
+---
+trajectory_msgs/JointTrajectory trajectory
+bool feasible
