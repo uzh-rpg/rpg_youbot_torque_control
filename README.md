@@ -5,17 +5,17 @@ How to use the torque controller
 --------------
 
 For the torque controller, the `youbot_oodl` with enabled torque messages and disabled gripper sensor readouts has to be running. 
-It can be downloaded from `https://github.com/ailab/youbot-ros-pkg`. The torque controller can then be started with 
+It can be downloaded from [https://github.com/ailab/youbot-ros-pkg](https://github.com/ailab/youbot-ros-pkg). The torque controller can then be started with 
 
 rosrun  torque_control  torque_control
 
 if executed from the torque_control folder. In a launch file the following syntax has to be used:
 
-<launch>
-
-<node name="torque_control" pkg="torque_control" type="torque_control" cwd="node" output="screen"/>
-
-</launch>
+  <launch>
+  
+  <node name="torque_control" pkg="torque_control" type="torque_control" cwd="node" output="screen"/>
+  
+  </launch>
 
 This launches an action server. The action server goal msg must be of type `trajectory_msgs/JointTrajectory`. The message can either 
 be created by your node or by calling the `trajectory_generator` service. The trajectory has to consist of values for joint 
