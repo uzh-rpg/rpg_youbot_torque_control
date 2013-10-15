@@ -13,8 +13,7 @@ if executed from the torque_control folder. In a launch file the following synta
 
 <launch>
 
-<node name="torque_control" pkg="torque_control" 
-      type="torque_control" cwd="node" output="screen"/>
+<node name="torque_control" pkg="torque_control" type="torque_control" cwd="node" output="screen"/>
 
 </launch>
 
@@ -33,11 +32,19 @@ The `trajectory_generator` offers four different services:
 - `From_CS_2_CS`: generates a joint space trajectory to move the gripper in a straight line from the Cartesian start to the Cartesian end position.
 - `Circular_Trajectory`: generates a circular joint space trajectory around a center point.
 
-It is started with
+You can start the service with
 
 rosrun trajectory_generator trajectory_service
 
-If a feasible trajectory for the input parameters are found, it is returned in a `trajectory_msgs/JointTrajectory`
+or
+
+<launch>
+
+<node name="trajectory" pkg="trajectory_generator" type="trajectory_service" output="screen" />
+
+</launch>
+
+from a launch file. If a feasible trajectory for the input parameters are found, it is returned in a `trajectory_msgs/JointTrajectory`
 message. "JS" in the service name stands for joint space. It expects a fully defined `brics_actuator::JointPositions` message. 
 The "CS" stands for Cartesian space and is a `geometry_msgs::Pose` message. Examples for how the different services are called,
 can be found in the `trajectory_generator/src/tester.cpp` file.
