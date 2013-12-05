@@ -52,8 +52,13 @@ can be found in the `trajectory_generator/src/tester.cpp` file.
 Summary to test the torque controller wihout adding launch file:
 
 1.roscore
+
 2.rosrun torque_control torque_control
+
     Execute this command from the torque_control directory otherwise you will have this error
+    
      "Remeber to run the torque controller from the directory with the Controller.cfg file in."
+     
 3.rosrun trajectory_generator trajectory_service
+
 4.rosrun torque_example gwd_traj
