@@ -14,7 +14,7 @@
 #include "YoubotArmDynamicsSymbolic.hpp"
 #include "YoubotArmFKin.hpp"
 #include "YoubotJoints.hpp"
-
+#include <boost/units/io.hpp>
 #include <boost/units/systems/si.hpp>
 
 #include <brics_actuator/CartesianWrench.h>

@@ -31,7 +31,11 @@
 
 #include <Eigen/Dense>
 
+#include <tf2/LinearMath/btQuaternion.h>
+
 #include <boost/units/systems/si.hpp>
+
+#include <boost/units/io.hpp>
 
 class TrajectoryGenerator
 {
