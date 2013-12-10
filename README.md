@@ -4,7 +4,10 @@ Torque-Control
 Video: [http://www.youtube.com/watch?v=OMZ1XVXErKY](http://www.youtube.com/watch?v=OMZ1XVXErKY)  
 More information: [Master Thesis](http://rpg.ifi.uzh.ch/docs/theses/Benjamin_Keiser_Torque_Control_2013.pdf), [More software from the Robotics and Perception Group](http://rpg.ifi.uzh.ch/software_datasets.html)
 
-This repository provides a torque controller for the KUKA youBot arm as well as a Service to generate trajectories which can then be executed by the torque controller. The Torque Controller has been tested under ROS-Groovy and Ubuntu 12.04.
+This repository provides a torque controller for the KUKA youBot arm as well as a Service to generate trajectories which can then be executed by the torque controller. The Torque Controller has been tested under the following setups:
+
+* Ubuntu 12.04 with ROS-Groovy
+* Ubuntu 12.04 with ROS-Fuerte
 
 Installation
 ------------
@@ -20,7 +23,7 @@ Additionally, the following packages are required which you can download by runn
     git clone https://github.com/ipa320/cob_common.git
     git clone https://github.com/ailab/youbot-ros-pkg.git
 
-The latter is an adapted version of the [youbot/youbot-ros-pkg](https://github.com/youbot/youbot-ros-pkg). The adapted version enables sending torque messages to the `youbot_oodl` and disables gripper sensor readouts. This was necessary because the gripper position readout is blocking the `youbot_oodl`.
+The latter is an adapted version of the [youbot/youbot-ros-pkg](https://github.com/youbot/youbot-ros-pkg). **It is important to use the adapted package instead of the original one since the torque controller will not work properly otherwise!** The adapted version enables sending torque messages to the `youbot_oodl` and disables gripper sensor readouts. This was necessary because the gripper position readout is blocking the `youbot_oodl`.
 
 ### Main Installation
 
