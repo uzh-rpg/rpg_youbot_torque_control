@@ -807,9 +807,7 @@ TrajectoryGenerator* TrajectoryGenerator::getCircle(double radius, double omega,
                                                     Eigen::Vector3d center)
 {
   Eigen::Vector3d cur_pos, cur_rpy, temp;
-  btQuaternion q(rpy(2), rpy(1), 0);
-  Eigen::Quaterniond rot(q.w(), q.x(), q.y(), q.z());
-  Eigen::Matrix3d rotm = rot.toRotationMatrix();
+  Eigen::Matrix3d rotm = Eigen::Matrix3d(Eigen::AngleAxisd(rpy(2), Eigen::Vector3d::UnitZ()) * Eigen::AngleAxisd(rpy(1), Eigen::Vector3d::UnitY()));
   cout << "Rotation" << endl;
   cout << rotm << endl;
   double time;

@@ -30,7 +30,7 @@
 #include <tf_conversions/tf_eigen.h>
 
 #include <Eigen/Dense>
-
+ 
 #include <boost/units/systems/si.hpp>
 
 class TrajectoryGenerator
