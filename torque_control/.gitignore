@@ -1,0 +1,9 @@
+
+msg/torque_trajectoryAction.msg
+msg/torque_trajectoryActionGoal.msg
+msg/torque_trajectoryActionFeedback.msg
+msg/torque_trajectoryActionResult.msg
+
+msg/torque_trajectoryGoal.msg
+msg/torque_trajectoryFeedback.msg
+msg/torque_trajectoryResult.msg
