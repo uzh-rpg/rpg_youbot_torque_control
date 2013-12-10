@@ -32,6 +32,7 @@
 #include <Eigen/Dense>
  
 #include <boost/units/systems/si.hpp>
+#include <boost/units/io.hpp>
 
 class TrajectoryGenerator
 {

@@ -16,6 +16,7 @@
 #include "YoubotJoints.hpp"
 
 #include <boost/units/systems/si.hpp>
+#include <boost/units/io.hpp>
 
 #include <brics_actuator/CartesianWrench.h>
 #include <brics_actuator/JointTorques.h>
