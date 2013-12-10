@@ -1,6 +1,9 @@
 Torque-Control
 ==============
 
+Video: [http://www.youtube.com/watch?v=OMZ1XVXErKY](http://www.youtube.com/watch?v=OMZ1XVXErKY)  
+More information: [Master Thesis](http://rpg.ifi.uzh.ch/docs/theses/Benjamin_Keiser_Torque_Control_2013.pdf), [More software from the Robotics and Perception Group](http://rpg.ifi.uzh.ch/software_datasets.html)
+
 How to use the torque controller
 --------------
 
