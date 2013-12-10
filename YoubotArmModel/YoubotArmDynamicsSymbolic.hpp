@@ -242,7 +242,7 @@ inline void pd_controller_Torques(Eigen::MatrixXd & Kp, Eigen::MatrixXd & Kv, Ei
 
 inline bool gainMatrices(Eigen::MatrixXd & Kp, Eigen::MatrixXd & Kv)
 {
-   std::ifstream in("Controller.cfg",std::ios::in);
+   std::ifstream in("../Controller.cfg",std::ios::in);
    std::string line;
    if (in.is_open())
    {

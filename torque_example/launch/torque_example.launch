@@ -1,0 +1,10 @@
+<launch>
+	
+	<!-- Launch the torque controller node -->
+	<node name="torque_control" pkg="torque_control" type="torque_control" cwd="node" output="screen"/>
+
+	<!-- Launch the trajectory generator service -->
+	<node name="trajectory_generator" pkg="trajectory_generator" type="trajectory_service" output="screen" />
+
+
+</launch>
