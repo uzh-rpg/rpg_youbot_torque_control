@@ -9,6 +9,12 @@ This repository provides a torque controller for the KUKA youBot arm as well as 
 * Ubuntu 12.04 with ROS-Groovy
 * Ubuntu 12.04 with ROS-Fuerte
 
+Before You Use The Controller!
+------------------------------
+
+In order to use the torque controller, you will have to **change the controller gains of the motor controllers** of the KUKA youBot arm. Otherwise, the controller will **not** work. To change these gains, you can use the [joint configurator application](https://github.com/youbot/youbot_applications/tree/master/joint_configurator). Please read Section 4.3 of the [Master Thesis](http://rpg.ifi.uzh.ch/docs/theses/Benjamin_Keiser_Torque_Control_2013.pdf) to find out how to tune the gains. Our values are listed in Table 4.1--however, these values are most likely different for every robot. 
+
+
 Installation
 ------------
 
