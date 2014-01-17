@@ -1,30 +1,47 @@
-cmake_minimum_required(VERSION 2.4.6)
-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+cmake_minimum_required(VERSION 2.8.3)
+project(torque_example)
 
-# Set the build type.  Options are:
-#  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
-#  Debug          : w/ debug symbols, w/o optimization
-#  Release        : w/o debug symbols, w/ optimization
-#  RelWithDebInfo : w/ debug symbols, w/ optimization
-#  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
-#set(ROS_BUILD_TYPE RelWithDebInfo)
+find_package(catkin REQUIRED
+  COMPONENTS
+    brics_actuator
+    tf_conversions
+    youbot_description
+    roscpp
+    ik_solver_service
+    brics_actuator
+    trajectory_msgs
+	rpg_youbot_common
+	torque_control
+	trajectory_generator
+)
 
-rosbuild_init()
-
-#set the default path for built executables to the "bin" directory
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-#set the default path for built libraries to the "lib" directory
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
-
-#uncomment if you have defined messages
-#rosbuild_genmsg()
-#uncomment if you have defined services
-#rosbuild_gensrv()
-
-#common commands for building c++ executables and libraries
 find_package(Eigen REQUIRED)
-include_directories(${Eigen_INCLUDE_DIRS})
-rosbuild_add_boost_directories()
-#rosbuild_link_boost(${PROJECT_NAME} thread)
-rosbuild_add_executable(gwd_traj src/ltr.cpp ../rpg_youbot_common/src/rpg_youbot_common.cpp)
-rosbuild_add_executable(circle_traj src/circle.cpp ../rpg_youbot_common/src/rpg_youbot_common.cpp)
+find_package(Boost REQUIRED)
+
+catkin_package(
+  CATKIN_DEPENDS
+    brics_actuator
+    trajectory_msgs
+)
+
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+  ${Eigen_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}  
+)
+
+
+add_executable(gwd_traj src/ltr.cpp ../rpg_youbot_common/src/rpg_youbot_common.cpp)
+target_link_libraries(gwd_traj
+  ${catkin_LIBRARIES}
+  ${Eigen_LIBRARIES}
+  ${Boost_LIBRARIES}
+)
+
+add_executable(circle_traj src/circle.cpp ../rpg_youbot_common/src/rpg_youbot_common.cpp)
+target_link_libraries(circle_traj
+  ${catkin_LIBRARIES}
+  ${Eigen_LIBRARIES}
+  ${Boost_LIBRARIES}
+)
+

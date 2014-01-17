@@ -1,18 +1,38 @@
-cmake_minimum_required(VERSION 2.4.6)
-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+cmake_minimum_required(VERSION 2.8.3)
+project(rpg_youbot_common)
 
-# Set the build type.  Options are:
-#  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
-#  Debug          : w/ debug symbols, w/o optimization
-#  Release        : w/o debug symbols, w/ optimization
-#  RelWithDebInfo : w/ debug symbols, w/ optimization
-#  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
-#set(ROS_BUILD_TYPE RelWithDebInfo)
+find_package(catkin REQUIRED
+  COMPONENTS
+	tf
+    roscpp
+    brics_actuator
+    std_msgs
+)
 
-rosbuild_init()
+find_package(Eigen REQUIRED)
+find_package(Boost REQUIRED)
 
-rosbuild_add_boost_directories()
+catkin_package(
+  CATKIN_DEPENDS
+	brics_actuator
+	std_msgs
+  INCLUDE_DIRS
+    include/  
+	
+)
 
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+include_directories(
+  include/
+  ${catkin_INCLUDE_DIRS}
+  ${Eigen_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}  
+)
 
-#rosbuild_add_executable(rpg_youbot_common src/rpg_youbot_common.cpp)
+#add_executable(rpg_youbot_common src/rpg_youbot_common.cpp)
+#target_link_libraries(torque_control
+#  ${catkin_LIBRARIES}
+#  ${Eigen_LIBRARIES}
+#  ${Boost_LIBRARIES}
+#)
+
+

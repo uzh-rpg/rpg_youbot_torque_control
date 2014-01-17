@@ -1,28 +1,75 @@
-cmake_minimum_required(VERSION 2.4.6)
-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+cmake_minimum_required(VERSION 2.8.3)
+project(torque_control)
 
-# Set the build type.  Options are:
-#  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
-#  Debug          : w/ debug symbols, w/o optimization
-#  Release        : w/o debug symbols, w/ optimization
-#  RelWithDebInfo : w/ debug symbols, w/ optimization
-#  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
-#set(ROS_BUILD_TYPE RelWithDebInfo)
+find_package(catkin REQUIRED
+  COMPONENTS
+	youbot_description
+	brics_actuator
+	roscpp
+	sensor_msgs
+	trajectory_msgs
+	actionlib
+	std_srvs
+	brics_actuator
+	trajectory_msgs
+	sensor_msgs
+	actionlib_msgs
+)
 
-rosbuild_find_ros_package(actionlib_msgs)
-include(${actionlib_msgs_PACKAGE_PATH}/cmake/actionbuild.cmake)
-genaction()
-rosbuild_init()
-
-#set the default path for built executables to the "bin" directory
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-#set the default path for built libraries to the "lib" directory
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
-
-#common commands for building c++ executables and libraries
-rosbuild_add_boost_directories()
 find_package(Eigen REQUIRED)
-include_directories(${Eigen_INCLUDE_DIRS} ../YoubotArmModel)
-rosbuild_add_executable(torque_control src/torque.cpp)
-rosbuild_genmsg()
-rosbuild_gensrv()
+find_package(Boost REQUIRED)
+
+# Generate messages in the 'msg' folder
+#add_message_files(
+#	FILES
+#	torque_trajectoryAction.msg
+#	torque_trajectoryActionFeedback.msg
+#	torque_trajectoryActionGoal.msg
+#	torque_trajectoryActionResult.msg
+#	torque_trajectoryFeedback.msg
+#	torque_trajectoryGoal.msg
+#	torque_trajectoryResult.msg
+#)
+
+## Generate services in the 'srv' folder
+add_service_files(
+	FILES
+	step.srv
+)
+
+## Generate actions in the 'action' folder
+add_action_files(
+	FILES
+	torque_trajectory.action
+)
+
+generate_messages(
+  DEPENDENCIES
+    brics_actuator
+    trajectory_msgs
+    sensor_msgs
+	actionlib_msgs
+)
+
+catkin_package(
+  CATKIN_DEPENDS
+	brics_actuator
+	trajectory_msgs
+	sensor_msgs
+	actionlib_msgs
+)
+
+include_directories(
+  ${catkin_INCLUDE_DIRS}
+  ${Eigen_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}  
+  ../YoubotArmModel
+)
+
+add_executable(torque_control src/torque.cpp)
+add_dependencies(torque_control ${PROJECT_NAME}_generate_messages_cpp)
+target_link_libraries(torque_control
+  ${catkin_LIBRARIES}
+  ${Eigen_LIBRARIES}
+  ${Boost_LIBRARIES}
+)

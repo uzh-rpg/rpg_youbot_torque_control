@@ -1,40 +1,66 @@
-cmake_minimum_required(VERSION 2.4.6)
-include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+cmake_minimum_required(VERSION 2.8.3)
+project(ik_solver_service)
 
-# Set the build type.  Options are:
-#  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
-#  Debug          : w/ debug symbols, w/o optimization
-#  Release        : w/o debug symbols, w/ optimization
-#  RelWithDebInfo : w/ debug symbols, w/ optimization
-#  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
-#set(ROS_BUILD_TYPE RelWithDebInfo)
-
-rosbuild_init()
-
-#set the default path for built executables to the "bin" directory
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
-#set the default path for built libraries to the "lib" directory
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
-
-#uncomment if you have defined messages
-#rosbuild_genmsg()
-#uncomment if you have defined services
-#rosbuild_gensrv()
-
-#common commands for building c++ executables and libraries
-#rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
-#target_link_libraries(${PROJECT_NAME} another_library)
-#rosbuild_add_boost_directories()
-#rosbuild_link_boost(${PROJECT_NAME} thread)
-#rosbuild_add_executable(example examples/example.cpp)
-#target_link_libraries(example ${PROJECT_NAME})
+find_package(catkin REQUIRED
+  COMPONENTS
+	roscpp
+	message_generation
+	geometry_msgs
+	std_msgs
+)
 
 find_package(Eigen REQUIRED)
-include_directories(${EIGEN_INCLUDE_DIRS})
-add_definitions(${EIGEN_DEFINITIONS})
+find_package(Boost REQUIRED)
 
-rosbuild_genmsg()
-rosbuild_gensrv()
-rosbuild_add_executable(ik_solver_service src/ik_solver_service.cpp src/YoubotGraspIK.cpp)
+# Generate messages in the 'msg' folder
+add_message_files(
+	FILES
+	FullyConstrainedReq.msg
+	FullyConstrainedRes.msg
+)
 
-rosbuild_add_executable(test_client src/test_client.cpp)
+## Generate services in the 'srv' folder
+add_service_files(
+	FILES
+	SolveClosestIK.srv
+	SolveFullyConstrainedIK.srv
+	SolveFullyConstrainedIKArray.srv
+	SolvePreferredPitchIK.srv
+	SolvePreferredTypeIK.srv
+)
+
+generate_messages(
+  DEPENDENCIES
+    geometry_msgs
+    std_msgs
+)
+
+catkin_package(
+  CATKIN_DEPENDS
+	geometry_msgs
+	std_msgs
+	message_runtime
+)
+
+include_directories(
+  include/
+  ${catkin_INCLUDE_DIRS}
+  ${Eigen_INCLUDE_DIRS}
+  ${Boost_INCLUDE_DIRS}  
+)
+
+add_executable(ik_solver_service src/ik_solver_service.cpp src/YoubotGraspIK.cpp)
+add_dependencies(ik_solver_service ${PROJECT_NAME}_generate_messages_cpp)
+target_link_libraries(ik_solver_service
+  ${catkin_LIBRARIES}
+  ${Eigen_LIBRARIES}
+  ${Boost_LIBRARIES}
+)
+
+add_executable(test_client src/test_client.cpp)
+add_dependencies(test_client ${PROJECT_NAME}_generate_messages_cpp)
+target_link_libraries(test_client
+  ${catkin_LIBRARIES}
+  ${Eigen_LIBRARIES}
+  ${Boost_LIBRARIES}
+)
