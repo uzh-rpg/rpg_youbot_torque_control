@@ -7,6 +7,7 @@
 
 #include "torque.hpp"
 #include <time.h>
+#include <ros/package.h>
 
 using namespace std;
 
@@ -57,8 +58,9 @@ bool TorqueController::initialize()
   eff_torques.setZero(DOF);
   Kp.setZero(DOF, DOF);
   Kv.setZero(DOF, DOF);
+  std::string package_path = ros::package::getPath("torque_control");
 
-  if (!gainMatrices(Kp, Kv))
+  if (!gainMatrices(Kp, Kv, package_path))
   {
     return false;
   }
@@ -149,7 +151,7 @@ void TorqueController::jointstateCallback(const sensor_msgs::JointState::ConstPt
   }
   else
   {
-    ROS_WARN("NO JOINT STATES FOR YOUBOT ARM RECEIVED");
+    ROS_INFO("NO JOINT STATES FOR YOUBOT ARM RECEIVED");
   }
 }
 

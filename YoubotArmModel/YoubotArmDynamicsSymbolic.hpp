@@ -240,9 +240,10 @@ inline void pd_controller_Torques(Eigen::MatrixXd & Kp, Eigen::MatrixXd & Kv, Ei
 }
 
 
-inline bool gainMatrices(Eigen::MatrixXd & Kp, Eigen::MatrixXd & Kv)
+inline bool gainMatrices(Eigen::MatrixXd & Kp, Eigen::MatrixXd & Kv,std::string package_path)
 {
-   std::ifstream in("../Controller.cfg",std::ios::in);
+  const char *controller_cfg_file_path = (package_path + "/Controller.cfg").c_str();
+  std::ifstream in(controller_cfg_file_path,std::ios::in);
    std::string line;
    if (in.is_open())
    {
