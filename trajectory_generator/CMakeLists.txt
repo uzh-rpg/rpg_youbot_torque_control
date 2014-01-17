@@ -10,6 +10,7 @@ find_package(catkin REQUIRED
     ik_solver_service
     brics_actuator
     trajectory_msgs
+    message_generation
 )
 
 find_package(Eigen REQUIRED)
@@ -36,6 +37,7 @@ catkin_package(
   CATKIN_DEPENDS
     brics_actuator
     trajectory_msgs
+    message_runtime
 )
 
 include_directories(

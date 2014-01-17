@@ -13,6 +13,7 @@ find_package(catkin REQUIRED
 	rpg_youbot_common
 	torque_control
 	trajectory_generator
+	message_generation
 )
 
 find_package(Eigen REQUIRED)
@@ -22,6 +23,7 @@ catkin_package(
   CATKIN_DEPENDS
     brics_actuator
     trajectory_msgs
+    message_runtime
 )
 
 include_directories(

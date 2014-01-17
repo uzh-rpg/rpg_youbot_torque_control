@@ -21,8 +21,10 @@
   <build_depend>rpg_youbot_common</build_depend>
   <build_depend>torque_control</build_depend>
   <build_depend>trajectory_generator</build_depend>
+  <build_depend>message_generation</build_depend>
   
   <run_depend>brics_actuator</run_depend>
   <run_depend>trajectory_msgs</run_depend>
+  <run_depend>message_runtime</run_depend>
   
 </package>
