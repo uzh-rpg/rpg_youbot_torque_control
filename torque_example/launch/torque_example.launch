@@ -5,6 +5,8 @@
 
 	<!-- Launch the trajectory generator service -->
 	<node name="trajectory_generator" pkg="trajectory_generator" type="trajectory_service" output="screen" />
-
+	
+	<!-- Launch the trajectory generator service -->
+	<node name="ik_solver_service" pkg="ik_solver_service" type="ik_solver_service" output="screen" />
 
 </launch>
