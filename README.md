@@ -27,7 +27,7 @@ The Torque Controller makes use of the trajectory_msgs of the pr2_controllers pa
 Additionally, the following packages are required which you can download by running
 
     git clone https://github.com/ipa320/cob_common.git
-    git clone https://github.com/ailab/youbot-ros-pkg.git
+    git clone https://github.com/uzh-rpg/youbot-ros-pkg.git
 
 The latter is an adapted version of the [youbot/youbot-ros-pkg](https://github.com/youbot/youbot-ros-pkg). **It is important to use the adapted package instead of the original one since the torque controller will not work properly otherwise!** The adapted version enables sending torque messages to the `youbot_oodl` and disables gripper sensor readouts. This was necessary because the gripper position readout is blocking the `youbot_oodl`.
 
@@ -35,7 +35,7 @@ The latter is an adapted version of the [youbot/youbot-ros-pkg](https://github.c
 
 You can download the actual Torque Controller by running
 
-    git clone https://github.com/ailab/rpg_youbot_torque_control.git
+    git clone https://github.com/uzh-rpg/rpg_youbot_torque_control.git
     
 Then, you can simply `rosmake` it
 
@@ -106,27 +106,27 @@ I provides four different services to generate trajectories for the KUKA youBot 
 
 #### Services
 
-* From_JS_2_JS ([trajectory_generator/JStoJS](https://github.com/ailab/rpg_youbot_torque_control/blob/master/trajectory_generator/srv/JStoJS.srv))
+* From_JS_2_JS ([trajectory_generator/JStoJS](https://github.com/uzh-rpg/rpg_youbot_torque_control/blob/master/trajectory_generator/srv/JStoJS.srv))
 
   Generates a joint space trajectory to move all the joints from the start joint space position to the desired end joint space position. The joints will perform a quadratic profile in position.
   
-* From_JS_2_CS ([trajectory_generator/JStoCS](https://github.com/ailab/rpg_youbot_torque_control/blob/master/trajectory_generator/srv/JStoCS.srv))
+* From_JS_2_CS ([trajectory_generator/JStoCS](https://github.com/uzh-rpg/rpg_youbot_torque_control/blob/master/trajectory_generator/srv/JStoCS.srv))
 
   Generates a joint space trajectory to move the gripper in a straight line from the start joint space position to the Cartesian end position. This is helpful to reach a Cartesian end-effector position from the current manipulator configuration.
   
-* From_CS_2_CS ([trajectory_generator/CStoCS](https://github.com/ailab/rpg_youbot_torque_control/blob/master/trajectory_generator/srv/CStoCS.srv))
+* From_CS_2_CS ([trajectory_generator/CStoCS](https://github.com/uzh-rpg/rpg_youbot_torque_control/blob/master/trajectory_generator/srv/CStoCS.srv))
 
   Generates a joint space trajectory to move the gripper in a straight line from the Cartesian start to the Cartesian end position.
 
-* Circular_Trajectory ([trajectory_generator/Circle](https://github.com/ailab/rpg_youbot_torque_control/blob/master/trajectory_generator/srv/Circle.srv))
+* Circular_Trajectory ([trajectory_generator/Circle](https://github.com/uzh-rpg/rpg_youbot_torque_control/blob/master/trajectory_generator/srv/Circle.srv))
 
   Generates a circular joint space trajectory around a center point.
 
-Examples on how to use the different services can be found in the [tester.cpp](https://github.com/ailab/rpg_youbot_torque_control/blob/master/trajectory_generator/src/tester.cpp) file.
+Examples on how to use the different services can be found in the [tester.cpp](https://github.com/uzh-rpg/rpg_youbot_torque_control/blob/master/trajectory_generator/src/tester.cpp) file.
 
 ### Example for using the Torque Controller with the Trajectory Generator
 
-An axample on how to use the torque controller is provided in the [torque_example](https://github.com/ailab/rpg_youbot_torque_control/tree/master/torque_example) package. Make it as
+An axample on how to use the torque controller is provided in the [torque_example](https://github.com/uzh-rpg/rpg_youbot_torque_control/tree/master/torque_example) package. Make it as
 
     rosmake torque_example
 
