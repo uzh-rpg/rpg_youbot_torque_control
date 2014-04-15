@@ -14,6 +14,7 @@ find_package(catkin REQUIRED
 	trajectory_msgs
 	sensor_msgs
 	actionlib_msgs
+	roslib
 )
 
 find_package(Eigen REQUIRED)
