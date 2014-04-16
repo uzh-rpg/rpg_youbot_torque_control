@@ -1,13 +1,14 @@
 Torque-Control
 ==============
 
-Video: [http://www.youtube.com/watch?v=OMZ1XVXErKY](http://www.youtube.com/watch?v=OMZ1XVXErKY)  
+This repository provides a torque controller for the KUKA youBot arm as well as a Service to generate trajectories which can then be executed by the torque controller. The Torque Controller has been tested under the following setup:
+
+* Ubuntu 12.04 with ROS-Hydro
+
+Watch the [video](http://www.youtube.com/watch?v=8Ui3MoOxcPQ) demonstrating the RPG youBot Torque Controller:   
+[![ RPG youBot Torque Controller Video](http://img.youtube.com/vi/OMZ1XVXErKY/0.jpg)](http://www.youtube.com/watch?v=OMZ1XVXErKY)
+
 More information: [Master Thesis](http://rpg.ifi.uzh.ch/docs/theses/Benjamin_Keiser_Torque_Control_2013.pdf), [More software from the Robotics and Perception Group](http://rpg.ifi.uzh.ch/software_datasets.html)
-
-This repository provides a torque controller for the KUKA youBot arm as well as a Service to generate trajectories which can then be executed by the torque controller. The Torque Controller has been tested under the following setups:
-
-* Ubuntu 12.04 with ROS-Groovy
-* Ubuntu 12.04 with ROS-Fuerte
 
 Before You Use The Controller!
 ------------------------------
@@ -20,28 +21,52 @@ Installation
 
 ### Dependencies
 
-The Torque Controller makes use of the trajectory_msgs of the pr2_controllers package. You can install it by running
+To compile everything you need to install the youBot driver.
 
-    sudo apt-get install ros-groovy-pr2-controllers
+    sudo apt-get install ros-hydro-youbot-driver
+
+The Torque Controller makes use of the pr2_msgs and the brics_actuator packages. You can install them by running
+
+    sudo apt-get install ros-hydro-pr2-msgs
+    sudo apt-get install ros-hydro-brics-actuator
     
-Additionally, the following packages are required which you can download by running
+Additionally, you need an adapted version of the ros wrapper of the driver which you have to clone into the src folder of your catkin workspace
 
-    git clone https://github.com/ipa320/cob_common.git
-    git clone https://github.com/uzh-rpg/youbot-ros-pkg.git
+    cd catkin_ws/src
+    git clone https://github.com/uzh-rpg/youbot_driver_ros_interface.git
 
-The latter is an adapted version of the [youbot/youbot-ros-pkg](https://github.com/youbot/youbot-ros-pkg). **It is important to use the adapted package instead of the original one since the torque controller will not work properly otherwise!** The adapted version enables sending torque messages to the `youbot_oodl` and disables gripper sensor readouts. This was necessary because the gripper position readout is blocking the `youbot_oodl`.
+The latter is an adapted version of the [mas-group/youbot_driver_ros_interface](https://github.com/mas-group/youbot_driver_ros_interface.git). **It is important to use the adapted package instead of the original one since the torque controller will not work properly otherwise!** The adapted version enables sending torque messages to the `youbot_oodl` and disables gripper sensor readouts. This was necessary because the gripper position readout is blocking the `youbot_oodl`.
 
 ### Main Installation
 
 You can download the actual Torque Controller by running
-
+    
+    cd catkin_ws/src
     git clone https://github.com/uzh-rpg/rpg_youbot_torque_control.git
     
-Then, you can simply `rosmake` it
+Then, you can simply `catkin_make` it
 
-    cd rpg_youbot_torque_control/torque_control/
-    rosmake
+    cd catkin_ws
+    catkin_make
 
+* At the moment there is still some problem with building the action messages. Just run `catkin_make` twice and it should compile properly.
+
+### Test the Torque Controller with the Trajectory Generator
+
+An axample on how to use the torque controller is provided in the [torque_example](https://github.com/uzh-rpg/rpg_youbot_torque_control/tree/master/torque_example) package. To test it, you first have to launch the youbot_ros_driver_interface by
+
+    roslaunch youbot_driver_ros_interface youbot_driver.launch
+
+Then, you can launch the provided launch file
+
+    roslaunch torque_example torque_example.launch
+
+which starts the Torque Controller and a Trajectory Generator Service. Then you can start the exapmple by running
+
+    rosrun torque_example circle_traj
+    
+This will place the gripper to a start position using the existing position control. The node then asks you if you are ready to execute a trajectory with the torque controller. If you are type `yes` in the console where you started the `circle_traj` node. The gripper should then follow a circular trajectory.
+    
 Basic Usage
 -----------
 
@@ -124,17 +149,4 @@ I provides four different services to generate trajectories for the KUKA youBot 
 
 Examples on how to use the different services can be found in the [tester.cpp](https://github.com/uzh-rpg/rpg_youbot_torque_control/blob/master/trajectory_generator/src/tester.cpp) file.
 
-### Example for using the Torque Controller with the Trajectory Generator
-
-An axample on how to use the torque controller is provided in the [torque_example](https://github.com/uzh-rpg/rpg_youbot_torque_control/tree/master/torque_example) package. Make it as
-
-    rosmake torque_example
-
-Then, you can launch the provided launch file
-
-    roslaunch torque_example torque_example.launch
-
-which starts the Torque Controller and a Trajectory Generator Service. Then you can start the exapmple by running
-
-    rosrun torque_example gwd_traj
 
