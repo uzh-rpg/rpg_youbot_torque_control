@@ -3,35 +3,22 @@ project(torque_control)
 
 find_package(catkin REQUIRED
   COMPONENTS
+  	roscpp
 	youbot_description
-	brics_actuator
-	roscpp
-	sensor_msgs
-	trajectory_msgs
-	actionlib
-	std_srvs
-	brics_actuator
-	message_generation
-	trajectory_msgs
-	sensor_msgs
-	actionlib_msgs
 	roslib
+	genmsg	
+	brics_actuator
+	actionlib
+	actionlib_msgs
+	sensor_msgs
+	trajectory_msgs
+	trajectory_msgs
+	std_srvs
+	message_generation
 )
 
 find_package(Eigen REQUIRED)
 find_package(Boost REQUIRED)
-
-# Generate messages in the 'msg' folder
-#add_message_files(
-#	FILES
-#	torque_trajectoryAction.msg
-#	torque_trajectoryActionFeedback.msg
-#	torque_trajectoryActionGoal.msg
-#	torque_trajectoryActionResult.msg
-#	torque_trajectoryFeedback.msg
-#	torque_trajectoryGoal.msg
-#	torque_trajectoryResult.msg
-#)
 
 ## Generate services in the 'srv' folder
 add_service_files(
@@ -41,8 +28,8 @@ add_service_files(
 
 ## Generate actions in the 'action' folder
 add_action_files(
-	FILES
-	torque_trajectory.action
+	DIRECTORY action
+	FILES torque_trajectory.action
 )
 
 generate_messages(
@@ -70,7 +57,9 @@ include_directories(
 )
 
 add_executable(torque_control src/torque.cpp)
+
 add_dependencies(torque_control ${PROJECT_NAME}_generate_messages_cpp)
+
 target_link_libraries(torque_control
   ${catkin_LIBRARIES}
   ${Eigen_LIBRARIES}

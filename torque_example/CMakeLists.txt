@@ -10,10 +10,10 @@ find_package(catkin REQUIRED
     ik_solver_service
     brics_actuator
     trajectory_msgs
-	rpg_youbot_common
-	torque_control
-	trajectory_generator
-	message_generation
+    rpg_youbot_common
+    torque_control
+    trajectory_generator
+	  message_generation
 )
 
 find_package(Eigen REQUIRED)
@@ -21,6 +21,7 @@ find_package(Boost REQUIRED)
 
 catkin_package(
   CATKIN_DEPENDS
+    torque_control
     brics_actuator
     trajectory_msgs
     message_runtime
@@ -32,8 +33,8 @@ include_directories(
   ${Boost_INCLUDE_DIRS}  
 )
 
-
 add_executable(gwd_traj src/ltr.cpp ../rpg_youbot_common/src/rpg_youbot_common.cpp)
+
 target_link_libraries(gwd_traj
   ${catkin_LIBRARIES}
   ${Eigen_LIBRARIES}

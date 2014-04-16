@@ -26,5 +26,6 @@
   <run_depend>brics_actuator</run_depend>
   <run_depend>trajectory_msgs</run_depend>
   <run_depend>message_runtime</run_depend>
+  <run_depend>torque_control</run_depend>
   
 </package>
