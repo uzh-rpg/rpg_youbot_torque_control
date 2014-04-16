@@ -4,7 +4,6 @@ project(torque_control)
 find_package(catkin REQUIRED
   COMPONENTS
   	roscpp
-	youbot_description
 	roslib
 	genmsg	
 	brics_actuator

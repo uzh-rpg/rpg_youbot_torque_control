@@ -5,7 +5,6 @@ find_package(catkin REQUIRED
   COMPONENTS
     brics_actuator
     tf_conversions
-    youbot_description
     roscpp
     ik_solver_service
     brics_actuator
