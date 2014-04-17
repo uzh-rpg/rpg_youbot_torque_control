@@ -49,8 +49,6 @@ Then, you can simply `catkin_make` it
     cd catkin_ws
     catkin_make
 
-* At the moment there is still some problem with building the action messages. Just run `catkin_make` twice and it should compile properly.
-
 ### Test the Torque Controller with the Trajectory Generator
 
 An axample on how to use the torque controller is provided in the [torque_example](https://github.com/uzh-rpg/rpg_youbot_torque_control/tree/master/torque_example) package. To test it, you first have to launch the youbot_ros_driver_interface by

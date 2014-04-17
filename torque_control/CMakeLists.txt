@@ -11,7 +11,6 @@ find_package(catkin REQUIRED
 	actionlib_msgs
 	sensor_msgs
 	trajectory_msgs
-	trajectory_msgs
 	std_srvs
 	message_generation
 )
@@ -57,7 +56,7 @@ include_directories(
 
 add_executable(torque_control src/torque.cpp)
 
-add_dependencies(torque_control ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(torque_control ${PROJECT_NAME}_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 
 target_link_libraries(torque_control
   ${catkin_LIBRARIES}

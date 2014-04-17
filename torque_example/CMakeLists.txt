@@ -33,6 +33,7 @@ include_directories(
 )
 
 add_executable(gwd_traj src/ltr.cpp ../rpg_youbot_common/src/rpg_youbot_common.cpp)
+add_dependencies(gwd_traj ${catkin_EXPORTED_TARGETS})
 
 target_link_libraries(gwd_traj
   ${catkin_LIBRARIES}
@@ -41,6 +42,8 @@ target_link_libraries(gwd_traj
 )
 
 add_executable(circle_traj src/circle.cpp ../rpg_youbot_common/src/rpg_youbot_common.cpp)
+add_dependencies(circle_traj ${catkin_EXPORTED_TARGETS})
+
 target_link_libraries(circle_traj
   ${catkin_LIBRARIES}
   ${Eigen_LIBRARIES}
