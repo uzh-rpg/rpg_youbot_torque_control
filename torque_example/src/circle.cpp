@@ -10,7 +10,7 @@
 #include <torque_control/torque_trajectoryAction.h>
 #include <torque_control/step.h>
 #include <actionlib/client/simple_action_client.h>
-#include "rpg_youbot_common.h"
+#include "rpg_youbot_common/rpg_youbot_common.h"
 
 using namespace std;
 

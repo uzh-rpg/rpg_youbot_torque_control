@@ -50,7 +50,7 @@ include_directories(
 )
 
 add_executable(ik_solver_service src/ik_solver_service.cpp src/YoubotGraspIK.cpp)
-add_dependencies(ik_solver_service ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(ik_solver_service ${PROJECT_NAME}_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 target_link_libraries(ik_solver_service
   ${catkin_LIBRARIES}
   ${Eigen_LIBRARIES}
@@ -58,7 +58,7 @@ target_link_libraries(ik_solver_service
 )
 
 add_executable(test_client src/test_client.cpp)
-add_dependencies(test_client ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(test_client ${PROJECT_NAME}_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 target_link_libraries(test_client
   ${catkin_LIBRARIES}
   ${Eigen_LIBRARIES}

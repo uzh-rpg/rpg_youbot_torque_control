@@ -15,7 +15,6 @@ find_package(catkin REQUIRED
 find_package(Eigen REQUIRED)
 find_package(Boost REQUIRED)
 
-
 ## Generate services in the 'srv' folder
 add_service_files(
   FILES
@@ -46,9 +45,8 @@ include_directories(
   ../YoubotArmModel
 )
 
-
 add_executable(trajectory_service src/trajserv.cpp src/traj.cpp)
-add_dependencies(trajectory_service ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(trajectory_service ${PROJECT_NAME}_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 target_link_libraries(trajectory_service
   ${catkin_LIBRARIES}
   ${Eigen_LIBRARIES}
@@ -56,7 +54,7 @@ target_link_libraries(trajectory_service
 )
 
 add_executable(service_tester src/tester.cpp)
-add_dependencies(service_tester ${PROJECT_NAME}_generate_messages_cpp)
+add_dependencies(service_tester ${PROJECT_NAME}_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 target_link_libraries(service_tester
   ${catkin_LIBRARIES}
   ${Eigen_LIBRARIES}

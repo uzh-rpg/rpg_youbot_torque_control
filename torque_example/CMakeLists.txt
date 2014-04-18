@@ -1,18 +1,17 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(torque_example)
 
-find_package(catkin REQUIRED
-  COMPONENTS
-    brics_actuator
-    tf_conversions
-    roscpp
-    ik_solver_service
-    brics_actuator
-    trajectory_msgs
-    rpg_youbot_common
-    torque_control
-    trajectory_generator
-	  message_generation
+find_package(catkin REQUIRED COMPONENTS
+  brics_actuator
+  tf_conversions
+  roscpp
+  ik_solver_service
+  brics_actuator
+  trajectory_msgs
+  rpg_youbot_common
+  torque_control
+  trajectory_generator
+  message_generation
 )
 
 find_package(Eigen REQUIRED)
@@ -32,7 +31,7 @@ include_directories(
   ${Boost_INCLUDE_DIRS}  
 )
 
-add_executable(gwd_traj src/ltr.cpp ../rpg_youbot_common/src/rpg_youbot_common.cpp)
+add_executable(gwd_traj src/ltr.cpp)
 add_dependencies(gwd_traj ${catkin_EXPORTED_TARGETS})
 
 target_link_libraries(gwd_traj
@@ -41,7 +40,7 @@ target_link_libraries(gwd_traj
   ${Boost_LIBRARIES}
 )
 
-add_executable(circle_traj src/circle.cpp ../rpg_youbot_common/src/rpg_youbot_common.cpp)
+add_executable(circle_traj src/circle.cpp)
 add_dependencies(circle_traj ${catkin_EXPORTED_TARGETS})
 
 target_link_libraries(circle_traj

@@ -22,7 +22,7 @@ brics_actuator::JointPositions generate_gripper_position_msg(double gripper_l, d
 
 brics_actuator::JointVelocities generate_joint_velocity_msg(double* joints);
 
-} // namepsace
+} // rpg_youbot_common
 
 #endif
 

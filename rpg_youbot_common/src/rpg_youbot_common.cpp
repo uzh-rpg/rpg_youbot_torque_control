@@ -1,4 +1,4 @@
-#include "rpg_youbot_common.h"
+#include "rpg_youbot_common/rpg_youbot_common.h"
 
 namespace rpg_youbot_common
 {
@@ -85,4 +85,4 @@ brics_actuator::JointVelocities generate_joint_velocity_msg(double* joints)
 	return joint_velocity_msg;
 }
 
-} // namepsace
+} // rpg_youbot_common
