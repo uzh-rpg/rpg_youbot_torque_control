@@ -54,14 +54,14 @@ int main(int argc, char **argv)
   end.positions[4].value = 4.4942;
   for (int i = 0; i < 5; i++)
   {
-    start.positions[i].joint_uri=joint_names[i];
-    end.positions[i].joint_uri=joint_names[i];
-    start_v.velocities[i].joint_uri=joint_names[i];
-    end_v.velocities[i].joint_uri=joint_names[i];
-    start.positions[i].unit=rad;
-    end.positions[i].unit=rad;
-    start_v.velocities[i].unit=rad_s;
-    end_v.velocities[i].unit=rad_s;
+    start.positions[i].joint_uri = joint_names[i];
+    end.positions[i].joint_uri = joint_names[i];
+    start_v.velocities[i].joint_uri = joint_names[i];
+    end_v.velocities[i].joint_uri = joint_names[i];
+    start.positions[i].unit = rad;
+    end.positions[i].unit = rad;
+    start_v.velocities[i].unit = rad_s;
+    end_v.velocities[i].unit = rad_s;
     start_v.velocities[i].value = 0;
     end_v.velocities[i].value = 0;
   }
@@ -72,45 +72,45 @@ int main(int argc, char **argv)
   js2js.request.end_vel = end_v;
   js2js.request.max_vel = 0.05;
   js2js.request.max_acc = 0.5;
-/*  if (js2jstester.call(js2js))
-  {
-    if (js2js.response.feasible)
-    {
-      cout << "JStoJS feasible trajectory" << endl;
-      while (!js2js.response.trajectory.joint_names.empty())
-      {
-        cout << js2js.response.trajectory.joint_names.back() << "\t";
-        js2js.response.trajectory.joint_names.pop_back();
-      }
-      cout << endl;
-      while (!js2js.response.trajectory.points.empty())
-      {
-        point = js2js.response.trajectory.points.back();
-        js2js.response.trajectory.points.pop_back();
-        cout << point.positions.back() << "\t";
-        point.positions.pop_back();
-        cout << point.positions.back() << "\t";
-        point.positions.pop_back();
-        cout << point.positions.back() << "\t";
-        point.positions.pop_back();
-        cout << point.positions.back() << "\t";
-        point.positions.pop_back();
-        cout << point.positions.back() << endl;
-      }
-    }
-    else
-    {
-      cout << "JStoJS non feasible trajectory" << endl;
-    }
-  }
-*/
+  /*  if (js2jstester.call(js2js))
+   {
+   if (js2js.response.feasible)
+   {
+   cout << "JStoJS feasible trajectory" << endl;
+   while (!js2js.response.trajectory.joint_names.empty())
+   {
+   cout << js2js.response.trajectory.joint_names.back() << "\t";
+   js2js.response.trajectory.joint_names.pop_back();
+   }
+   cout << endl;
+   while (!js2js.response.trajectory.points.empty())
+   {
+   point = js2js.response.trajectory.points.back();
+   js2js.response.trajectory.points.pop_back();
+   cout << point.positions.back() << "\t";
+   point.positions.pop_back();
+   cout << point.positions.back() << "\t";
+   point.positions.pop_back();
+   cout << point.positions.back() << "\t";
+   point.positions.pop_back();
+   cout << point.positions.back() << "\t";
+   point.positions.pop_back();
+   cout << point.positions.back() << endl;
+   }
+   }
+   else
+   {
+   cout << "JStoJS non feasible trajectory" << endl;
+   }
+   }
+   */
   geometry_msgs::Pose object;
   trajectory_generator::CStoCS cs2cs;
   trajectory_generator::JStoCS js2cs;
   object.position.x = 0.0;
   object.position.y = -0.25;
   object.position.z = -0.02;
-  Eigen::Quaterniond grip(0.6851, -0.1749, 0.6851,0.1749);
+  Eigen::Quaterniond grip(0.6851, -0.1749, 0.6851, 0.1749);
   object.orientation.x = grip.x();
   object.orientation.y = grip.y();
   object.orientation.z = grip.z();
@@ -130,83 +130,83 @@ int main(int argc, char **argv)
   js2cs.request.max_vel = 0.05;
   js2cs.request.max_acc = 0.5;
 
-/*  if (js2cstester.call(js2cs))
-  {
-    if (js2cs.response.feasible)
-    {
-      cout << "JStoCS feasible trajectory" << endl;
-      while (!js2cs.response.trajectory.joint_names.empty())
-      {
-        cout << js2cs.response.trajectory.joint_names.back() << "\t";
-        js2cs.response.trajectory.joint_names.pop_back();
-      }
-      cout << endl;
-      while (!js2cs.response.trajectory.points.empty())
-      {
-        point = js2cs.response.trajectory.points.back();
-        js2cs.response.trajectory.points.pop_back();
-        cout << point.positions.back() << "\t";
-        point.positions.pop_back();
-        cout << point.positions.back() << "\t";
-        point.positions.pop_back();
-        cout << point.positions.back() << "\t";
-        point.positions.pop_back();
-        cout << point.positions.back() << "\t";
-        point.positions.pop_back();
-        cout << point.positions.back() << endl;
-      }
-    }
-    else
-    {
-      cout << "JS 2 CS not feasible" << endl;
-    }
-  }
-*/
-/*  if (cs2cstester.call(cs2cs))
-  {
-    if (cs2cs.response.feasible)
-    {
-      cout << "CStoCS feasible trajectory" << endl;
-      while (!cs2cs.response.trajectory.joint_names.empty())
-      {
-        cout << cs2cs.response.trajectory.joint_names.back() << "\t";
-        cs2cs.response.trajectory.joint_names.pop_back();
-      }
-      cout << endl;
-      while (!cs2cs.response.trajectory.points.empty())
-      {
-        point = cs2cs.response.trajectory.points.back();
-        cs2cs.response.trajectory.points.pop_back();
-        cout << point.positions.back() << "\t";
-        point.positions.pop_back();
-        cout << point.positions.back() << "\t";
-        point.positions.pop_back();
-        cout << point.positions.back() << "\t";
-        point.positions.pop_back();
-        cout << point.positions.back() << "\t";
-        point.positions.pop_back();
-        cout << point.positions.back() << endl;
-      }
-    }
-    else
-    {
-      cout << "CS 2 CS not feasible" << endl;
-    }
+  /*  if (js2cstester.call(js2cs))
+   {
+   if (js2cs.response.feasible)
+   {
+   cout << "JStoCS feasible trajectory" << endl;
+   while (!js2cs.response.trajectory.joint_names.empty())
+   {
+   cout << js2cs.response.trajectory.joint_names.back() << "\t";
+   js2cs.response.trajectory.joint_names.pop_back();
+   }
+   cout << endl;
+   while (!js2cs.response.trajectory.points.empty())
+   {
+   point = js2cs.response.trajectory.points.back();
+   js2cs.response.trajectory.points.pop_back();
+   cout << point.positions.back() << "\t";
+   point.positions.pop_back();
+   cout << point.positions.back() << "\t";
+   point.positions.pop_back();
+   cout << point.positions.back() << "\t";
+   point.positions.pop_back();
+   cout << point.positions.back() << "\t";
+   point.positions.pop_back();
+   cout << point.positions.back() << endl;
+   }
+   }
+   else
+   {
+   cout << "JS 2 CS not feasible" << endl;
+   }
+   }
+   */
+  /*  if (cs2cstester.call(cs2cs))
+   {
+   if (cs2cs.response.feasible)
+   {
+   cout << "CStoCS feasible trajectory" << endl;
+   while (!cs2cs.response.trajectory.joint_names.empty())
+   {
+   cout << cs2cs.response.trajectory.joint_names.back() << "\t";
+   cs2cs.response.trajectory.joint_names.pop_back();
+   }
+   cout << endl;
+   while (!cs2cs.response.trajectory.points.empty())
+   {
+   point = cs2cs.response.trajectory.points.back();
+   cs2cs.response.trajectory.points.pop_back();
+   cout << point.positions.back() << "\t";
+   point.positions.pop_back();
+   cout << point.positions.back() << "\t";
+   point.positions.pop_back();
+   cout << point.positions.back() << "\t";
+   point.positions.pop_back();
+   cout << point.positions.back() << "\t";
+   point.positions.pop_back();
+   cout << point.positions.back() << endl;
+   }
+   }
+   else
+   {
+   cout << "CS 2 CS not feasible" << endl;
+   }
 
-  }
-*/
+   }
+   */
   trajectory_generator::Circle circle;
   circle.request.radius = 0.1;
-  circle.request.omega = 2*circle.request.radius*M_PI;
- /* circle.request.rpy[0] = M_PI/2;
-  circle.request.rpy[1] = 0;
-  circle.request.rpy[2] = 0;
-  circle.request.center[0] = 0.35;
-  circle.request.center[1] = 0;
-  circle.request.center[2] = 0.3;*/
-  circle.request.rpy[0] = M_PI/2;
-  circle.request.rpy[1] = -M_PI/4;
-  circle.request.rpy[2] = M_PI/10;
+  circle.request.omega = 2 * circle.request.radius * M_PI;
+  /* circle.request.rpy[0] = M_PI/2;
+   circle.request.rpy[1] = 0;
+   circle.request.rpy[2] = 0;
+   circle.request.center[0] = 0.35;
+   circle.request.center[1] = 0;
+   circle.request.center[2] = 0.3;*/
+  circle.request.rpy[0] = M_PI / 2;
+  circle.request.rpy[1] = -M_PI / 4;
+  circle.request.rpy[2] = M_PI / 10;
   circle.request.center[0] = 0.35;
   circle.request.center[1] = 0.0;
   circle.request.center[2] = 0.5;

@@ -786,12 +786,12 @@ void TrajectoryGenerator::genToTrajectory(TrajectoryGenerator * gen, trajectory_
 void TrajectoryGenerator::rotToRPY(Eigen::Matrix3d & rot, Eigen::Vector3d & rpy)
 {
   rpy(1) = atan2(-(double)rot(2, 0), sqrt(pow((double)rot(0, 0), 2)) + pow((double)rot(1, 0), 2));
-  if (fabs((double)rpy(1) - M_PI / 2) < DBL_EPSILON )
+  if (fabs((double)rpy(1) - M_PI / 2) < DBL_EPSILON)
   {
     rpy(2) = 0;
     rpy(0) = atan2((double)rot(0, 1), (double)rot(1, 1));
   }
-  else if (fabs((double)rpy(1) + M_PI / 2) < DBL_EPSILON )
+  else if (fabs((double)rpy(1) + M_PI / 2) < DBL_EPSILON)
   {
     rpy(2) = 0;
     rpy(0) = -atan2((double)rot(0, 1), (double)rot(1, 1));
@@ -807,7 +807,8 @@ TrajectoryGenerator* TrajectoryGenerator::getCircle(double radius, double omega,
                                                     Eigen::Vector3d center)
 {
   Eigen::Vector3d cur_pos, cur_rpy, temp;
-  Eigen::Matrix3d rotm = Eigen::Matrix3d(Eigen::AngleAxisd(rpy(2), Eigen::Vector3d::UnitZ()) * Eigen::AngleAxisd(rpy(1), Eigen::Vector3d::UnitY()));
+  Eigen::Matrix3d rotm = Eigen::Matrix3d(
+      Eigen::AngleAxisd(rpy(2), Eigen::Vector3d::UnitZ()) * Eigen::AngleAxisd(rpy(1), Eigen::Vector3d::UnitY()));
   cout << "Rotation" << endl;
   cout << rotm << endl;
   double time;

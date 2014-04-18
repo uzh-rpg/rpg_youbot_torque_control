@@ -136,7 +136,7 @@ bool solve_fully_constrained_ik(ik_solver_service::SolveFullyConstrainedIK::Requ
 }
 
 bool solve_fully_constrained_ik_array(ik_solver_service::SolveFullyConstrainedIKArray::Request &req,
-                                     ik_solver_service::SolveFullyConstrainedIKArray::Response &res)
+                                      ik_solver_service::SolveFullyConstrainedIKArray::Response &res)
 {
   ik_solver_service::FullyConstrainedReq request;
   ik_solver_service::FullyConstrainedRes response;
@@ -170,7 +170,7 @@ bool solve_fully_constrained_ik_array(ik_solver_service::SolveFullyConstrainedIK
     response.arm_to_front = fully_constrained_solution.arm_to_front;
     response.arm_bended_up = fully_constrained_solution.arm_bended_up;
     response.gripper_downwards = fully_constrained_solution.gripper_downwards;
-    res.ikresp.insert(res.ikresp.begin(),response);
+    res.ikresp.insert(res.ikresp.begin(), response);
   }
   return true;
 }
@@ -188,7 +188,7 @@ int main(int argc, char **argv)
   ros::ServiceServer solve_fully_constrained_ik_service = n.advertiseService("solve_fully_constrained_ik",
                                                                              solve_fully_constrained_ik);
   ros::ServiceServer solve_fully_constrained_ik_service_array = n.advertiseService("solve_fully_constrained_ik_array",
-                                                                             solve_fully_constrained_ik_array);
+                                                                                   solve_fully_constrained_ik_array);
 
   ros::spin();
 

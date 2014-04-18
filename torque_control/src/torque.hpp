@@ -45,7 +45,8 @@ public:
 
   void writeToFile(std::ofstream & file, Eigen::VectorXd & vect);
 
-  bool pointToEigen(Eigen::VectorXd & pos, Eigen::VectorXd & vel, Eigen::VectorXd & acc, trajectory_msgs::JointTrajectoryPoint & point, std::vector<std::string> & joint_names);
+  bool pointToEigen(Eigen::VectorXd & pos, Eigen::VectorXd & vel, Eigen::VectorXd & acc,
+                    trajectory_msgs::JointTrajectoryPoint & point, std::vector<std::string> & joint_names);
 
   void stepInput();
 

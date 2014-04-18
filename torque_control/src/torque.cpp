@@ -120,7 +120,7 @@ void TorqueController::jointstateCallback(const sensor_msgs::JointState::ConstPt
         m_joint_state.velocity[i] = msg->velocity[j];
         if (msg->effort.size() >= YOUBOT_NR_OF_JOINTS)
         {
-          m_joint_state.effort[i] = msg->effort[j];   //no effort msg in webots
+          m_joint_state.effort[i] = msg->effort[j]; //no effort msg in webots
         }
         size++;
       }
@@ -166,7 +166,7 @@ void TorqueController::followTrajectory(const torque_control::torque_trajectoryG
   while (!j_traj.points.empty())
   {
     ros::spinOnce();
-    if(!pointToEigen(q_tra, qdot_tra, qdotdot_tra, j_traj.points.back(),j_traj.joint_names))
+    if (!pointToEigen(q_tra, qdot_tra, qdotdot_tra, j_traj.points.back(), j_traj.joint_names))
     {
       ros::shutdown();
     }
@@ -259,7 +259,7 @@ void TorqueController::stepInput()
 
     d_pos = torque2youbot(q_tra);
     a_pos = torque2youbot(m_q);
-    m_qdot(2)=-m_qdot(2);
+    m_qdot(2) = -m_qdot(2);
 
     writeToFile(rp, d_pos);
     writeToFile(ap, a_pos);
@@ -378,7 +378,7 @@ int TorqueController::limitTorques(Eigen::VectorXd & torques)
         return -1;
       }
     }
-    if (isnan((double)torques[i]))
+    if (isnan((double )torques[i]))
     {
       torques(i) = 0;
       ROS_ERROR("NAN TORQUES");
@@ -407,10 +407,12 @@ void TorqueController::writeToFile(std::ofstream & file, Eigen::VectorXd & vect)
 }
 
 bool TorqueController::pointToEigen(Eigen::VectorXd & pos, Eigen::VectorXd & vel, Eigen::VectorXd & acc,
-                                    trajectory_msgs::JointTrajectoryPoint & point, std::vector<std::string> & joint_names)
+                                    trajectory_msgs::JointTrajectoryPoint & point,
+                                    std::vector<std::string> & joint_names)
 {
   std::string name;
-  if(joint_names.size()!=5 || point.positions.size()!=5 || point.velocities.size()!=5 || point.accelerations.size()!=5)
+  if (joint_names.size() != 5 || point.positions.size() != 5 || point.velocities.size() != 5
+      || point.accelerations.size() != 5)
   {
     ROS_ERROR("PLEASE SUPPLY TRAJECTORY FOR ALL 5 JOINTS WITH VALID NAMES, POSITIONS, VELOCITIES AND ACCELERATIONS");
     return false;
@@ -420,25 +422,25 @@ bool TorqueController::pointToEigen(Eigen::VectorXd & pos, Eigen::VectorXd & vel
   while (!point.positions.empty())
   {
     name = joint_names.at(n);
-    if(name == joint_names[0])
+    if (name == joint_names[0])
     {
-      i=0;
+      i = 0;
     }
-    else if(name == joint_names[1])
+    else if (name == joint_names[1])
     {
-      i=1;
+      i = 1;
     }
-    else if(name == joint_names[2])
+    else if (name == joint_names[2])
     {
-      i=2;
+      i = 2;
     }
-    else if(name == joint_names[3])
+    else if (name == joint_names[3])
     {
-      i=3;
+      i = 3;
     }
-    else if(name == joint_names[4])
+    else if (name == joint_names[4])
     {
-      i=4;
+      i = 4;
     }
     else
     {

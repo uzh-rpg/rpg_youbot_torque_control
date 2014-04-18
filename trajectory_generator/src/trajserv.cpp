@@ -94,7 +94,7 @@ bool JStoCS(trajectory_generator::JStoCS::Request &req, trajectory_generator::JS
   getCartPos(start, p_start);
   traj->smoothAffine(p_start);
   traj->poseToEigen(req.end_pos, p_end);
-  traj->compareRotation(p_start,p_end);
+  traj->compareRotation(p_start, p_end);
   traj->getTrajectory(p_start, p_end, start_v, end_v);
   traj->genToTrajectory(traj, res.trajectory);
   res.feasible = !res.trajectory.points.empty();

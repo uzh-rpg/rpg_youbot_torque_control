@@ -6,83 +6,83 @@ namespace rpg_youbot_common
 double normalize_angle(double angle)
 {
   while (angle > M_PI)
-    angle -= 2*M_PI;
+    angle -= 2 * M_PI;
   while (angle < -M_PI)
-    angle += 2*M_PI;
+    angle += 2 * M_PI;
 
   return angle;
 }
 
 brics_actuator::JointPositions generate_joint_position_msg(double* joints)
 {
-	brics_actuator::JointPositions joint_position_msg;
+  brics_actuator::JointPositions joint_position_msg;
 
-	std::stringstream jointName;
-	joint_position_msg.positions.clear();
+  std::stringstream jointName;
+  joint_position_msg.positions.clear();
 
-	for (int i=0; i<5; i++)
-	{
-		brics_actuator::JointValue joint;
+  for (int i = 0; i < 5; i++)
+  {
+    brics_actuator::JointValue joint;
 
-		joint.value = joints[i];
-		joint.unit = boost::units::to_string(boost::units::si::radians);
-		jointName.str("");
-		jointName << "arm_joint_" << (i + 1);
-		joint.joint_uri = jointName.str();
+    joint.value = joints[i];
+    joint.unit = boost::units::to_string(boost::units::si::radians);
+    jointName.str("");
+    jointName << "arm_joint_" << (i + 1);
+    joint.joint_uri = jointName.str();
 
-		joint_position_msg.positions.push_back(joint);
-	}
+    joint_position_msg.positions.push_back(joint);
+  }
 
-	return joint_position_msg;
+  return joint_position_msg;
 }
 
 brics_actuator::JointPositions generate_gripper_position_msg(double gripper_l, double gripper_r)
 {
-	brics_actuator::JointPositions gripper_position_msg;
+  brics_actuator::JointPositions gripper_position_msg;
 
-	std::stringstream jointName;
-	gripper_position_msg.positions.clear();
+  std::stringstream jointName;
+  gripper_position_msg.positions.clear();
 
-	brics_actuator::JointValue joint_l;
-	joint_l.value = gripper_l;
-	joint_l.unit = boost::units::to_string(boost::units::si::meter);
-	jointName.str("");
-	jointName << "gripper_finger_joint_l";
-	joint_l.joint_uri = jointName.str();
-	gripper_position_msg.positions.push_back(joint_l);
+  brics_actuator::JointValue joint_l;
+  joint_l.value = gripper_l;
+  joint_l.unit = boost::units::to_string(boost::units::si::meter);
+  jointName.str("");
+  jointName << "gripper_finger_joint_l";
+  joint_l.joint_uri = jointName.str();
+  gripper_position_msg.positions.push_back(joint_l);
 
-	brics_actuator::JointValue joint_r;
-	joint_r.value = gripper_r;
-	joint_r.unit = boost::units::to_string(boost::units::si::meter);
-	jointName.str("");
-	jointName << "gripper_finger_joint_r";
-	joint_r.joint_uri = jointName.str();
-	gripper_position_msg.positions.push_back(joint_r);
+  brics_actuator::JointValue joint_r;
+  joint_r.value = gripper_r;
+  joint_r.unit = boost::units::to_string(boost::units::si::meter);
+  jointName.str("");
+  jointName << "gripper_finger_joint_r";
+  joint_r.joint_uri = jointName.str();
+  gripper_position_msg.positions.push_back(joint_r);
 
-	return gripper_position_msg;
+  return gripper_position_msg;
 }
 
 brics_actuator::JointVelocities generate_joint_velocity_msg(double* joints)
 {
-	brics_actuator::JointVelocities joint_velocity_msg;
+  brics_actuator::JointVelocities joint_velocity_msg;
 
-	std::stringstream jointName;
-	joint_velocity_msg.velocities.clear();
+  std::stringstream jointName;
+  joint_velocity_msg.velocities.clear();
 
-	for (int i=0; i<5; i++)
-	{
-		brics_actuator::JointValue joint;
+  for (int i = 0; i < 5; i++)
+  {
+    brics_actuator::JointValue joint;
 
-		joint.value = joints[i];
-		joint.unit = boost::units::to_string(boost::units::si::radian_per_second);
-		jointName.str("");
-		jointName << "arm_joint_" << (i + 1);
-		joint.joint_uri = jointName.str();
+    joint.value = joints[i];
+    joint.unit = boost::units::to_string(boost::units::si::radian_per_second);
+    jointName.str("");
+    jointName << "arm_joint_" << (i + 1);
+    joint.joint_uri = jointName.str();
 
-		joint_velocity_msg.velocities.push_back(joint);
-	}
+    joint_velocity_msg.velocities.push_back(joint);
+  }
 
-	return joint_velocity_msg;
+  return joint_velocity_msg;
 }
 
 } // rpg_youbot_common
