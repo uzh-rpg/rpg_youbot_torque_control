@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package>
+  <name>youbot_arm_model</name>
+
+  <version>0.0.0</version>
+  <description>youbot_arm_model</description>
+
+  <maintainer email="mueggler@ifi.uzh.ch">Elias Mueggler</maintainer>
+  <maintainer email="faessler@ifi.uzh.ch">Matthias Faessler</maintainer>
+
+  <license>LGPL</license>
+
+  #<buildtool_depend>catkin</buildtool_depend>
+  
+</package>

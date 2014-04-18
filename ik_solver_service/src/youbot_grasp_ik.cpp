@@ -1,13 +1,13 @@
-#include "YoubotGraspIK.h"
+#include "youbot_grasp_ik.h"
 
 // COmpute the solution which is closest to the given configuration
-joint_positions_solution_t YoubotGraspIK::solve_closest_ik(joint_positions_solution_t current_joint_positions,
-                                                           geometry_msgs::Point desired_position,
-                                                           geometry_msgs::Vector3 desired_normal)
+joint_positions_solution_t YoubotGraspIK::solveClosestIK(joint_positions_solution_t current_joint_positions,
+                                                         geometry_msgs::Point desired_position,
+                                                         geometry_msgs::Vector3 desired_normal)
 {
 
   std::vector<joint_positions_solution_t> solutions;
-  solutions = get_all_ik_solutions(desired_position, desired_normal);
+  solutions = getAllIKSolutions(desired_position, desired_normal);
 
   joint_positions_solution_t final_solution;
   if (0 == solutions.size())
@@ -20,20 +20,20 @@ joint_positions_solution_t YoubotGraspIK::solve_closest_ik(joint_positions_solut
   }
   else
   {
-    final_solution = take_closest_solution(current_joint_positions, solutions);
+    final_solution = takeClosestSolution(current_joint_positions, solutions);
   }
 
   return final_solution;
 }
 
 // Compute a solution, preferably with the given gripper pitch
-joint_positions_solution_t YoubotGraspIK::solve_preferred_pitch_ik(double preferred_pitch,
-                                                                   geometry_msgs::Point desired_position,
-                                                                   geometry_msgs::Vector3 desired_normal)
+joint_positions_solution_t YoubotGraspIK::solvePreferredPitchIK(double preferred_pitch,
+                                                                geometry_msgs::Point desired_position,
+                                                                geometry_msgs::Vector3 desired_normal)
 {
 
-  joint_positions_solution_t single_solution = compute_exact_pitch_solution(preferred_pitch, desired_position,
-                                                                            desired_normal);
+  joint_positions_solution_t single_solution = computeExactPitchSolution(preferred_pitch, desired_position,
+                                                                         desired_normal);
   if (single_solution.feasible)
   {
     return single_solution;
@@ -41,7 +41,7 @@ joint_positions_solution_t YoubotGraspIK::solve_preferred_pitch_ik(double prefer
   else
   {
     std::vector<joint_positions_solution_t> solutions;
-    solutions = get_all_ik_solutions(desired_position, desired_normal);
+    solutions = getAllIKSolutions(desired_position, desired_normal);
 
     joint_positions_solution_t final_solution;
     if (0 == solutions.size())
@@ -54,7 +54,7 @@ joint_positions_solution_t YoubotGraspIK::solve_preferred_pitch_ik(double prefer
     }
     else
     {
-      final_solution = take_closest_pitch_solution(preferred_pitch, solutions);
+      final_solution = takeClosestPitchSolution(preferred_pitch, solutions);
     }
 
     return final_solution;
@@ -62,14 +62,14 @@ joint_positions_solution_t YoubotGraspIK::solve_preferred_pitch_ik(double prefer
 }
 
 // Compute a solution, preferably of the given type
-joint_positions_solution_t YoubotGraspIK::solve_preferred_type_ik(bool arm_to_front, bool arm_bended_up,
-                                                                  bool gripper_downwards,
-                                                                  geometry_msgs::Point desired_position,
-                                                                  geometry_msgs::Vector3 desired_normal)
+joint_positions_solution_t YoubotGraspIK::solvePreferredTypeIK(bool arm_to_front, bool arm_bended_up,
+                                                               bool gripper_downwards,
+                                                               geometry_msgs::Point desired_position,
+                                                               geometry_msgs::Vector3 desired_normal)
 {
 
   std::vector<joint_positions_solution_t> solutions;
-  solutions = get_all_ik_solutions(desired_position, desired_normal);
+  solutions = getAllIKSolutions(desired_position, desired_normal);
 
   joint_positions_solution_t final_solution;
   if (0 == solutions.size())
@@ -82,16 +82,16 @@ joint_positions_solution_t YoubotGraspIK::solve_preferred_type_ik(bool arm_to_fr
   }
   else
   {
-    final_solution = take_closest_type_solution(arm_to_front, arm_bended_up, gripper_downwards, solutions);
+    final_solution = takeClosestTypeSolution(arm_to_front, arm_bended_up, gripper_downwards, solutions);
   }
 
   return final_solution;
 }
 
 // Compute a solution of given solution id, which is fully constrained even in the degenerative case
-joint_positions_solution_t YoubotGraspIK::solve_fully_constrained_ik(int id, double pitch,
-                                                                     geometry_msgs::Point desired_position,
-                                                                     geometry_msgs::Vector3 desired_normal)
+joint_positions_solution_t YoubotGraspIK::solveFullyConstrainedIK(int id, double pitch,
+                                                                  geometry_msgs::Point desired_position,
+                                                                  geometry_msgs::Vector3 desired_normal)
 {
 
   joint_positions_solution_t fully_constrained_solution;
@@ -123,11 +123,11 @@ joint_positions_solution_t YoubotGraspIK::solve_fully_constrained_ik(int id, dou
 
   if (des_normal.dot(x_gripper.cross(y_inter)) < 0)
   {
-    roll = normalize_angle(-roll);
+    roll = normalizeAngle(-roll);
   }
 
   // Compute IK for a single solution
-  fully_constrained_solution = compute_single_ik_solution(des_position, roll, pitch, id);
+  fully_constrained_solution = computeSingleIKSolution(des_position, roll, pitch, id);
   if (fully_constrained_solution.feasible)
   {
     // Sett attributes of solution type
@@ -165,14 +165,14 @@ joint_positions_solution_t YoubotGraspIK::solve_fully_constrained_ik(int id, dou
 }
 
 // Choose solution with minimum joint difference maximum
-joint_positions_solution_t YoubotGraspIK::take_closest_solution(joint_positions_solution_t current_joint_positions,
-                                                                std::vector<joint_positions_solution_t> solutions)
+joint_positions_solution_t YoubotGraspIK::takeClosestSolution(joint_positions_solution_t current_joint_positions,
+                                                              std::vector<joint_positions_solution_t> solutions)
 {
   int best_solution_index = 0;
-  double best_solution_max_difference = get_max_joint_difference(current_joint_positions, solutions[0]);
+  double best_solution_max_difference = getMaxJointDifference(current_joint_positions, solutions[0]);
   for (int i = 0; i < (int)solutions.size(); i++)
   {
-    double current_solution_max_difference = get_max_joint_difference(current_joint_positions, solutions[i]);
+    double current_solution_max_difference = getMaxJointDifference(current_joint_positions, solutions[i]);
     if (current_solution_max_difference < best_solution_max_difference)
     {
       best_solution_max_difference = current_solution_max_difference;
@@ -183,14 +183,14 @@ joint_positions_solution_t YoubotGraspIK::take_closest_solution(joint_positions_
 }
 
 // Choose solution with minimum difference to the desired gripper pitch
-joint_positions_solution_t YoubotGraspIK::take_closest_pitch_solution(double preferred_pitch,
-                                                                      std::vector<joint_positions_solution_t> solutions)
+joint_positions_solution_t YoubotGraspIK::takeClosestPitchSolution(double preferred_pitch,
+                                                                   std::vector<joint_positions_solution_t> solutions)
 {
   int best_solution_index = 0;
-  double best_solution_difference = get_pitch_difference(preferred_pitch, solutions[0]);
+  double best_solution_difference = getPitchDifference(preferred_pitch, solutions[0]);
   for (int i = 0; i < (int)solutions.size(); i++)
   {
-    double current_solution_difference = get_pitch_difference(preferred_pitch, solutions[i]);
+    double current_solution_difference = getPitchDifference(preferred_pitch, solutions[i]);
     if (current_solution_difference < best_solution_difference)
     {
       best_solution_difference = current_solution_difference;
@@ -201,9 +201,9 @@ joint_positions_solution_t YoubotGraspIK::take_closest_pitch_solution(double pre
 }
 
 // Compute the configuration which is closest to the desired solution type. Priorities are 1. gripper_downwards 2. arm_to_front 3. arm_bended_up
-joint_positions_solution_t YoubotGraspIK::take_closest_type_solution(bool arm_to_front, bool arm_bended_up,
-                                                                     bool gripper_downwards,
-                                                                     std::vector<joint_positions_solution_t> solutions)
+joint_positions_solution_t YoubotGraspIK::takeClosestTypeSolution(bool arm_to_front, bool arm_bended_up,
+                                                                  bool gripper_downwards,
+                                                                  std::vector<joint_positions_solution_t> solutions)
 {
 
   std::vector<int> correct_p1_idx; // indexes of solutions with correct gripper downwards attribute
@@ -299,8 +299,8 @@ joint_positions_solution_t YoubotGraspIK::take_closest_type_solution(bool arm_to
 }
 
 // Compute the maximum of all the joint differences between two configurations
-double YoubotGraspIK::get_max_joint_difference(joint_positions_solution_t solution_a,
-                                               joint_positions_solution_t solution_b)
+double YoubotGraspIK::getMaxJointDifference(joint_positions_solution_t solution_a,
+                                            joint_positions_solution_t solution_b)
 {
   double max_joint_difference = 0.0;
   for (uint i = 0; i < 5; i++)
@@ -309,7 +309,7 @@ double YoubotGraspIK::get_max_joint_difference(joint_positions_solution_t soluti
 }
 
 // Compute the difference of the preferred gripper pitch and the gripper pitch of a given configuration
-double YoubotGraspIK::get_pitch_difference(double preferred_pitch, joint_positions_solution_t solution)
+double YoubotGraspIK::getPitchDifference(double preferred_pitch, joint_positions_solution_t solution)
 {
   const double joint_offsets[5] = {DEG_TO_RAD(169.0), DEG_TO_RAD(65.0), DEG_TO_RAD(-146.0), DEG_TO_RAD(102.5),
                                    DEG_TO_RAD(167.5)};
@@ -320,27 +320,27 @@ double YoubotGraspIK::get_pitch_difference(double preferred_pitch, joint_positio
 }
 
 // Compute either the unique pitch solutions if it exists or all solutions of the degenerative case otherwise
-std::vector<joint_positions_solution_t> YoubotGraspIK::get_all_ik_solutions(geometry_msgs::Point desired_position,
-                                                                            geometry_msgs::Vector3 desired_normal)
+std::vector<joint_positions_solution_t> YoubotGraspIK::getAllIKSolutions(geometry_msgs::Point desired_position,
+                                                                         geometry_msgs::Vector3 desired_normal)
 {
   std::vector<joint_positions_solution_t> solutions;
 
   // Detect whether unique solution exists or not
-  if (exists_unique_pitch_solution(desired_position, desired_normal))
+  if (existsUniquePitchSolution(desired_position, desired_normal))
   {
-    calculate_unique_pitch_solutions(solutions, desired_position, desired_normal);
+    calculateUniquePitchSolutions(solutions, desired_position, desired_normal);
   }
   else
   {
-    calculate_degenerative_solutions(solutions, desired_position);
+    calculateDegenerativeSolutions(solutions, desired_position);
   }
 
   return solutions;
 }
 
 // Check if unique pitch solutions exist
-bool YoubotGraspIK::exists_unique_pitch_solution(geometry_msgs::Point desired_position,
-                                                 geometry_msgs::Vector3 desired_normal)
+bool YoubotGraspIK::existsUniquePitchSolution(geometry_msgs::Point desired_position,
+                                              geometry_msgs::Vector3 desired_normal)
 {
 
   // r and z direction vector
@@ -364,7 +364,7 @@ bool YoubotGraspIK::exists_unique_pitch_solution(geometry_msgs::Point desired_po
 }
 
 // Normalize an angle to be between -pi and pi
-double YoubotGraspIK::normalize_angle(double angle)
+double YoubotGraspIK::normalizeAngle(double angle)
 {
   // Normalize the angle to between -pi and pi
   while (angle > M_PI)
@@ -386,7 +386,7 @@ double YoubotGraspIK::sign(double value)
 }
 
 // Check wether a given configuration of the arm is feasible. i.e. within joint limits
-bool YoubotGraspIK::check_single_solution_feasability(joint_positions_solution_t single_solution)
+bool YoubotGraspIK::checkSingleSolutionFeasability(joint_positions_solution_t single_solution)
 {
 
   const double joint_min_angles[5] = {DEG_TO_RAD(-169.0), DEG_TO_RAD(-65.0), DEG_TO_RAD(-151.0), DEG_TO_RAD(-102.5),
@@ -406,22 +406,22 @@ bool YoubotGraspIK::check_single_solution_feasability(joint_positions_solution_t
 }
 
 // Compute one single arm configuration
-joint_positions_solution_t YoubotGraspIK::compute_single_ik_solution(Eigen::Vector3d des_position, double des_roll,
-                                                                     double des_pitch, int id)
+joint_positions_solution_t YoubotGraspIK::computeSingleIKSolution(Eigen::Vector3d des_position, double des_roll,
+                                                                  double des_pitch, int id)
 {
   joint_positions_solution_t single_solution;
 
   if (id == 1 || id == 2)
   {
     single_solution.joints[0] = atan2(des_position[1], des_position[0]);
-    single_solution.joints[4] = normalize_angle(des_roll);
+    single_solution.joints[4] = normalizeAngle(des_roll);
 
-    double r_4 = sqrt(des_position[0] * des_position[0] + des_position[1] * des_position[1]) - lox
-        - l_4 * cos(des_pitch);
-    double z_4 = des_position[2] - loz + l_4 * sin(des_pitch);
+    double r_4 = sqrt(des_position[0] * des_position[0] + des_position[1] * des_position[1]) - lox_
+        - l_4_ * cos(des_pitch);
+    double z_4 = des_position[2] - loz_ + l_4_ * sin(des_pitch);
 
-    double alpha_cos = (l_2 * l_2 + l_3 * l_3 - r_4 * r_4 - z_4 * z_4) / (2 * l_2 * l_3);
-    double beta_cos = (r_4 * r_4 + z_4 * z_4 + l_2 * l_2 - l_3 * l_3) / (2 * l_2 * sqrt(r_4 * r_4 + z_4 * z_4));
+    double alpha_cos = (l_2_ * l_2_ + l_3_ * l_3_ - r_4 * r_4 - z_4 * z_4) / (2 * l_2_ * l_3_);
+    double beta_cos = (r_4 * r_4 + z_4 * z_4 + l_2_ * l_2_ - l_3_ * l_3_) / (2 * l_2_ * sqrt(r_4 * r_4 + z_4 * z_4));
     double alpha, beta;
 
     if (alpha_cos < -1.0 || beta_cos > 1.0)
@@ -450,33 +450,33 @@ joint_positions_solution_t YoubotGraspIK::compute_single_ik_solution(Eigen::Vect
 
       if (id == 1)
       {
-        single_solution.joints[1] = normalize_angle(atan2(r_4, z_4) - beta);
-        single_solution.joints[2] = normalize_angle(M_PI - alpha);
-        single_solution.joints[3] = normalize_angle(
+        single_solution.joints[1] = normalizeAngle(atan2(r_4, z_4) - beta);
+        single_solution.joints[2] = normalizeAngle(M_PI - alpha);
+        single_solution.joints[3] = normalizeAngle(
             des_pitch + M_PI / 2 - single_solution.joints[2] - single_solution.joints[1]);
       }
       else
       {
-        single_solution.joints[1] = normalize_angle(atan2(r_4, z_4) + beta);
-        single_solution.joints[2] = normalize_angle(M_PI + alpha);
-        single_solution.joints[3] = normalize_angle(
+        single_solution.joints[1] = normalizeAngle(atan2(r_4, z_4) + beta);
+        single_solution.joints[2] = normalizeAngle(M_PI + alpha);
+        single_solution.joints[3] = normalizeAngle(
             des_pitch + M_PI / 2 - single_solution.joints[2] - single_solution.joints[1]);
       }
       // check feasibility
-      single_solution.feasible = check_single_solution_feasability(single_solution);
+      single_solution.feasible = checkSingleSolutionFeasability(single_solution);
     }
   }
   else if (id == 3 || id == 4)
   {
-    single_solution.joints[0] = normalize_angle(atan2(des_position[1], des_position[0]) + M_PI);
-    single_solution.joints[4] = normalize_angle(des_roll + M_PI);
+    single_solution.joints[0] = normalizeAngle(atan2(des_position[1], des_position[0]) + M_PI);
+    single_solution.joints[4] = normalizeAngle(des_roll + M_PI);
 
-    double r_4 = sqrt(des_position[0] * des_position[0] + des_position[1] * des_position[1]) + lox
-        - l_4 * cos(des_pitch);
-    double z_4 = des_position[2] - loz + l_4 * sin(des_pitch);
+    double r_4 = sqrt(des_position[0] * des_position[0] + des_position[1] * des_position[1]) + lox_
+        - l_4_ * cos(des_pitch);
+    double z_4 = des_position[2] - loz_ + l_4_ * sin(des_pitch);
 
-    double alpha_cos = (l_2 * l_2 + l_3 * l_3 - r_4 * r_4 - z_4 * z_4) / (2 * l_2 * l_3);
-    double beta_cos = (r_4 * r_4 + z_4 * z_4 + l_2 * l_2 - l_3 * l_3) / (2 * l_2 * sqrt(r_4 * r_4 + z_4 * z_4));
+    double alpha_cos = (l_2_ * l_2_ + l_3_ * l_3_ - r_4 * r_4 - z_4 * z_4) / (2 * l_2_ * l_3_);
+    double beta_cos = (r_4 * r_4 + z_4 * z_4 + l_2_ * l_2_ - l_3_ * l_3_) / (2 * l_2_ * sqrt(r_4 * r_4 + z_4 * z_4));
     double alpha, beta;
 
     if (alpha_cos < -1.0 || beta_cos > 1.0)
@@ -505,20 +505,20 @@ joint_positions_solution_t YoubotGraspIK::compute_single_ik_solution(Eigen::Vect
 
       if (id == 3)
       {
-        single_solution.joints[1] = normalize_angle(-atan2(r_4, z_4) + beta);
-        single_solution.joints[2] = normalize_angle(-M_PI + alpha);
-        single_solution.joints[3] = normalize_angle(
+        single_solution.joints[1] = normalizeAngle(-atan2(r_4, z_4) + beta);
+        single_solution.joints[2] = normalizeAngle(-M_PI + alpha);
+        single_solution.joints[3] = normalizeAngle(
             -des_pitch - M_PI / 2 - single_solution.joints[2] - single_solution.joints[1]);
       }
       else
       {
-        single_solution.joints[1] = normalize_angle(-atan2(r_4, z_4) - beta);
-        single_solution.joints[2] = normalize_angle(-M_PI - alpha);
-        single_solution.joints[3] = normalize_angle(
+        single_solution.joints[1] = normalizeAngle(-atan2(r_4, z_4) - beta);
+        single_solution.joints[2] = normalizeAngle(-M_PI - alpha);
+        single_solution.joints[3] = normalizeAngle(
             -des_pitch - M_PI / 2 - single_solution.joints[2] - single_solution.joints[1]);
       }
       // check feasibility
-      single_solution.feasible = check_single_solution_feasability(single_solution);
+      single_solution.feasible = checkSingleSolutionFeasability(single_solution);
     }
   }
   // Add joint angle offsets
@@ -536,9 +536,9 @@ joint_positions_solution_t YoubotGraspIK::compute_single_ik_solution(Eigen::Vect
 }
 
 // Compute the configuration with exactly the desired gripper pitch in the degenerative case
-joint_positions_solution_t YoubotGraspIK::compute_exact_pitch_solution(double preferred_pitch,
-                                                                       geometry_msgs::Point desired_position,
-                                                                       geometry_msgs::Vector3 desired_normal)
+joint_positions_solution_t YoubotGraspIK::computeExactPitchSolution(double preferred_pitch,
+                                                                    geometry_msgs::Point desired_position,
+                                                                    geometry_msgs::Vector3 desired_normal)
 {
 
   joint_positions_solution_t exact_pitch_solution;
@@ -570,7 +570,7 @@ joint_positions_solution_t YoubotGraspIK::compute_exact_pitch_solution(double pr
 
   if (des_normal.dot(x_gripper.cross(y_inter)) < 0)
   {
-    roll = normalize_angle(-roll);
+    roll = normalizeAngle(-roll);
   }
 
   // Compute all the 8 possible solutions and return the first feasible one we find
@@ -579,7 +579,7 @@ joint_positions_solution_t YoubotGraspIK::compute_exact_pitch_solution(double pr
     for (int solution_id = 1; solution_id <= 4; solution_id++)
     {
       // Compute IK for a single solution
-      exact_pitch_solution = compute_single_ik_solution(des_position, roll, preferred_pitch, solution_id);
+      exact_pitch_solution = computeSingleIKSolution(des_position, roll, preferred_pitch, solution_id);
       if (exact_pitch_solution.feasible)
       {
         // Sett attributes of solution type
@@ -615,7 +615,7 @@ joint_positions_solution_t YoubotGraspIK::compute_exact_pitch_solution(double pr
         return exact_pitch_solution;
       }
     }
-    roll = normalize_angle(roll + M_PI);
+    roll = normalizeAngle(roll + M_PI);
   }
   // If we reach this point no feasible solution is found
   exact_pitch_solution.feasible = false;
@@ -623,9 +623,9 @@ joint_positions_solution_t YoubotGraspIK::compute_exact_pitch_solution(double pr
 }
 
 // Compute all the so called unique pitch solutions
-void YoubotGraspIK::calculate_unique_pitch_solutions(std::vector<joint_positions_solution_t>& solutions,
-                                                     geometry_msgs::Point desired_position,
-                                                     geometry_msgs::Vector3 desired_normal)
+void YoubotGraspIK::calculateUniquePitchSolutions(std::vector<joint_positions_solution_t>& solutions,
+                                                  geometry_msgs::Point desired_position,
+                                                  geometry_msgs::Vector3 desired_normal)
 {
 
   // desired position as Eigen type
@@ -659,8 +659,8 @@ void YoubotGraspIK::calculate_unique_pitch_solutions(std::vector<joint_positions
       for (int solution_id = 1; solution_id <= 4; solution_id++)
       {
         // Compute IK for a single solution
-        joint_positions_solution_t single_solution = compute_single_ik_solution(des_position, temp_roll, temp_pitch,
-                                                                                solution_id);
+        joint_positions_solution_t single_solution = computeSingleIKSolution(des_position, temp_roll, temp_pitch,
+                                                                             solution_id);
         if (single_solution.feasible)
         {
           // Sett attributes of solution type
@@ -696,17 +696,17 @@ void YoubotGraspIK::calculate_unique_pitch_solutions(std::vector<joint_positions
           solutions.push_back(single_solution);
         }
       }
-      temp_pitch = normalize_angle(pitch + M_PI);
-      temp_roll = normalize_angle(-roll);
+      temp_pitch = normalizeAngle(pitch + M_PI);
+      temp_roll = normalizeAngle(-roll);
     }
-    roll = normalize_angle(roll + M_PI);
+    roll = normalizeAngle(roll + M_PI);
   }
 
 }
 
 // Compute all solutions of the degenerative case with a 5 degrees step of the gripper pitch
-void YoubotGraspIK::calculate_degenerative_solutions(std::vector<joint_positions_solution_t>& solutions,
-                                                     geometry_msgs::Point desired_position)
+void YoubotGraspIK::calculateDegenerativeSolutions(std::vector<joint_positions_solution_t>& solutions,
+                                                   geometry_msgs::Point desired_position)
 {
   // desired position as Eigen type
   Eigen::Vector3d des_position(desired_position.x, desired_position.y, desired_position.z);
@@ -721,11 +721,11 @@ void YoubotGraspIK::calculate_degenerative_solutions(std::vector<joint_positions
       joint_positions_solution_t single_solution;
       if (solution_id < 3)
       { // Destinction required because of how compute_single_ik_solution works
-        single_solution = compute_single_ik_solution(des_position, 0.0, pitch, solution_id);
+        single_solution = computeSingleIKSolution(des_position, 0.0, pitch, solution_id);
       }
       else
       {
-        single_solution = compute_single_ik_solution(des_position, M_PI, pitch, solution_id);
+        single_solution = computeSingleIKSolution(des_position, M_PI, pitch, solution_id);
       }
       if (single_solution.feasible)
       {

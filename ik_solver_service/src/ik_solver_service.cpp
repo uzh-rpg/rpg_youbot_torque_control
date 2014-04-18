@@ -1,4 +1,4 @@
-#include "YoubotGraspIK.h"
+#include "youbot_grasp_ik.h"
 
 #include "ik_solver_service/SolveClosestIK.h"
 #include "ik_solver_service/SolvePreferredPitchIK.h"
@@ -10,7 +10,7 @@
 
 //YoubotGraspIK IKSolver;
 
-bool solve_closest_ik(ik_solver_service::SolveClosestIK::Request &req, ik_solver_service::SolveClosestIK::Response &res)
+bool solveClosestIK(ik_solver_service::SolveClosestIK::Request &req, ik_solver_service::SolveClosestIK::Response &res)
 {
   joint_positions_solution_t current_joint_positions;
   geometry_msgs::Point desired_position;
@@ -27,8 +27,8 @@ bool solve_closest_ik(ik_solver_service::SolveClosestIK::Request &req, ik_solver
   desired_normal.y = req.des_normal[1];
   desired_normal.z = req.des_normal[2];
 
-  joint_positions_solution_t closest_solution = YoubotGraspIK::solve_closest_ik(current_joint_positions,
-                                                                                desired_position, desired_normal);
+  joint_positions_solution_t closest_solution = YoubotGraspIK::solveClosestIK(current_joint_positions, desired_position,
+                                                                              desired_normal);
 
   for (int i = 0; i < 5; i++)
   {
@@ -42,8 +42,8 @@ bool solve_closest_ik(ik_solver_service::SolveClosestIK::Request &req, ik_solver
   return true;
 }
 
-bool solve_preferred_pitch_ik(ik_solver_service::SolvePreferredPitchIK::Request &req,
-                              ik_solver_service::SolvePreferredPitchIK::Response &res)
+bool solvePreferredPitchIK(ik_solver_service::SolvePreferredPitchIK::Request &req,
+                           ik_solver_service::SolvePreferredPitchIK::Response &res)
 {
   geometry_msgs::Point desired_position;
   geometry_msgs::Vector3 desired_normal;
@@ -55,9 +55,9 @@ bool solve_preferred_pitch_ik(ik_solver_service::SolvePreferredPitchIK::Request 
   desired_normal.y = req.des_normal[1];
   desired_normal.z = req.des_normal[2];
 
-  joint_positions_solution_t preferred_pitch_solution = YoubotGraspIK::solve_preferred_pitch_ik(req.preferred_pitch,
-                                                                                                desired_position,
-                                                                                                desired_normal);
+  joint_positions_solution_t preferred_pitch_solution = YoubotGraspIK::solvePreferredPitchIK(req.preferred_pitch,
+                                                                                             desired_position,
+                                                                                             desired_normal);
 
   for (int i = 0; i < 5; i++)
   {
@@ -71,8 +71,8 @@ bool solve_preferred_pitch_ik(ik_solver_service::SolvePreferredPitchIK::Request 
   return true;
 }
 
-bool solve_preferred_type_ik(ik_solver_service::SolvePreferredTypeIK::Request &req,
-                             ik_solver_service::SolvePreferredTypeIK::Response &res)
+bool solvePreferredTypeIK(ik_solver_service::SolvePreferredTypeIK::Request &req,
+                          ik_solver_service::SolvePreferredTypeIK::Response &res)
 {
   geometry_msgs::Point desired_position;
   geometry_msgs::Vector3 desired_normal;
@@ -84,11 +84,11 @@ bool solve_preferred_type_ik(ik_solver_service::SolvePreferredTypeIK::Request &r
   desired_normal.y = req.des_normal[1];
   desired_normal.z = req.des_normal[2];
 
-  joint_positions_solution_t preferred_type_solution = YoubotGraspIK::solve_preferred_type_ik(req.arm_to_front,
-                                                                                              req.arm_bended_up,
-                                                                                              req.gripper_downwards,
-                                                                                              desired_position,
-                                                                                              desired_normal);
+  joint_positions_solution_t preferred_type_solution = YoubotGraspIK::solvePreferredTypeIK(req.arm_to_front,
+                                                                                           req.arm_bended_up,
+                                                                                           req.gripper_downwards,
+                                                                                           desired_position,
+                                                                                           desired_normal);
 
   for (int i = 0; i < 5; i++)
   {
@@ -102,8 +102,8 @@ bool solve_preferred_type_ik(ik_solver_service::SolvePreferredTypeIK::Request &r
   return true;
 }
 
-bool solve_fully_constrained_ik(ik_solver_service::SolveFullyConstrainedIK::Request &req,
-                                ik_solver_service::SolveFullyConstrainedIK::Response &res)
+bool solveFullyConstrainedIK(ik_solver_service::SolveFullyConstrainedIK::Request &req,
+                             ik_solver_service::SolveFullyConstrainedIK::Response &res)
 {
   int id;
   double pitch;
@@ -119,9 +119,9 @@ bool solve_fully_constrained_ik(ik_solver_service::SolveFullyConstrainedIK::Requ
   desired_normal.y = req.des_normal[1];
   desired_normal.z = req.des_normal[2];
 
-  joint_positions_solution_t fully_constrained_solution = YoubotGraspIK::solve_fully_constrained_ik(id, pitch,
-                                                                                                    desired_position,
-                                                                                                    desired_normal);
+  joint_positions_solution_t fully_constrained_solution = YoubotGraspIK::solveFullyConstrainedIK(id, pitch,
+                                                                                                 desired_position,
+                                                                                                 desired_normal);
 
   for (int i = 0; i < 5; i++)
   {
@@ -135,8 +135,8 @@ bool solve_fully_constrained_ik(ik_solver_service::SolveFullyConstrainedIK::Requ
   return true;
 }
 
-bool solve_fully_constrained_ik_array(ik_solver_service::SolveFullyConstrainedIKArray::Request &req,
-                                      ik_solver_service::SolveFullyConstrainedIKArray::Response &res)
+bool solveFullyConstrainedIKArray(ik_solver_service::SolveFullyConstrainedIKArray::Request &req,
+                                  ik_solver_service::SolveFullyConstrainedIKArray::Response &res)
 {
   ik_solver_service::FullyConstrainedReq request;
   ik_solver_service::FullyConstrainedRes response;
@@ -158,9 +158,9 @@ bool solve_fully_constrained_ik_array(ik_solver_service::SolveFullyConstrainedIK
     desired_normal.y = request.des_normal[1];
     desired_normal.z = request.des_normal[2];
 
-    joint_positions_solution_t fully_constrained_solution = YoubotGraspIK::solve_fully_constrained_ik(id, pitch,
-                                                                                                      desired_position,
-                                                                                                      desired_normal);
+    joint_positions_solution_t fully_constrained_solution = YoubotGraspIK::solveFullyConstrainedIK(id, pitch,
+                                                                                                   desired_position,
+                                                                                                   desired_normal);
 
     for (int i = 0; i < 5; i++)
     {
@@ -180,15 +180,15 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "solve_ik_server");
   ros::NodeHandle n;
 
-  ros::ServiceServer solve_closest_ik_service = n.advertiseService("solve_closest_ik", solve_closest_ik);
-  ros::ServiceServer solve_preferred_pitch_ik_service = n.advertiseService("solve_preferred_pitch_ik",
-                                                                           solve_preferred_pitch_ik);
+  ros::ServiceServer solve_closest_ik_service = n.advertiseService("solve_closest_ik", solveClosestIK);
+  ros::ServiceServer solve_preferred_pitch_ik_service = n.advertiseService("solvePreferredPitchIK",
+                                                                           solvePreferredPitchIK);
   ros::ServiceServer solve_preferred_type_ik_service = n.advertiseService("solve_preferred_type_ik",
-                                                                          solve_preferred_type_ik);
-  ros::ServiceServer solve_fully_constrained_ik_service = n.advertiseService("solve_fully_constrained_ik",
-                                                                             solve_fully_constrained_ik);
+                                                                          solvePreferredTypeIK);
+  ros::ServiceServer solve_fully_constrained_ik_service = n.advertiseService("solveFullyConstrainedIK",
+                                                                             solveFullyConstrainedIK);
   ros::ServiceServer solve_fully_constrained_ik_service_array = n.advertiseService("solve_fully_constrained_ik_array",
-                                                                                   solve_fully_constrained_ik_array);
+                                                                                   solveFullyConstrainedIKArray);
 
   ros::spin();
 

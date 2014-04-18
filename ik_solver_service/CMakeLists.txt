@@ -43,13 +43,13 @@ catkin_package(
 )
 
 include_directories(
-  include/
+  include
   ${catkin_INCLUDE_DIRS}
   ${Eigen_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}  
 )
 
-add_executable(ik_solver_service src/ik_solver_service.cpp src/YoubotGraspIK.cpp)
+add_executable(ik_solver_service src/ik_solver_service.cpp src/youbot_grasp_ik.cpp)
 add_dependencies(ik_solver_service ${PROJECT_NAME}_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 target_link_libraries(ik_solver_service
   ${catkin_LIBRARIES}

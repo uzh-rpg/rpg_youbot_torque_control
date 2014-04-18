@@ -11,6 +11,7 @@ find_package(catkin REQUIRED
 	actionlib_msgs
 	sensor_msgs
 	trajectory_msgs
+	youbot_arm_model
 	std_srvs
 	message_generation
 )
@@ -44,17 +45,18 @@ catkin_package(
 	trajectory_msgs
 	sensor_msgs
 	actionlib_msgs
+	youbot_arm_model
 	message_runtime
 )
 
 include_directories(
+  include
   ${catkin_INCLUDE_DIRS}
   ${Eigen_INCLUDE_DIRS}
-  ${Boost_INCLUDE_DIRS}  
-  ../YoubotArmModel
+  ${Boost_INCLUDE_DIRS}
 )
 
-add_executable(torque_control src/torque.cpp)
+add_executable(torque_control src/torque_control.cpp)
 
 add_dependencies(torque_control ${PROJECT_NAME}_generate_messages_cpp ${catkin_EXPORTED_TARGETS})
 

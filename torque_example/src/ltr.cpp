@@ -1,5 +1,5 @@
 /*
- * tester.cpp
+ * ltr.cpp
  *
  *  Created on: Sep 11, 2013
  *      Author: keiserb
@@ -156,13 +156,13 @@ int main(int argc, char **argv)
       point.positions.pop_back();
     }
     cout << "Publishing arm cmd" << endl;
-    arm_pub_pos.publish(rpg_youbot_common::generate_joint_position_msg(first_pt));
+    arm_pub_pos.publish(rpg_youbot_common::generateJointPositionMsg(first_pt));
     ros::spinOnce();
     sleep(0.5);
-    arm_pub_pos.publish(rpg_youbot_common::generate_joint_position_msg(first_pt));
+    arm_pub_pos.publish(rpg_youbot_common::generateJointPositionMsg(first_pt));
     ros::spinOnce();
     sleep(0.5);
-    arm_pub_pos.publish(rpg_youbot_common::generate_joint_position_msg(first_pt));
+    arm_pub_pos.publish(rpg_youbot_common::generateJointPositionMsg(first_pt));
     ros::spinOnce();
     sleep(1);
 

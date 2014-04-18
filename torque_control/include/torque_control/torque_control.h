@@ -1,5 +1,5 @@
 /*
- * torque.hpp
+ * torque_control.h
  *
  *  Created on: May 2, 2013
  *      Author: keiserb
@@ -11,9 +11,9 @@
 #include <iostream>
 
 #include <ros/ros.h>
-#include "YoubotArmDynamicsSymbolic.hpp"
-#include "YoubotArmFKin.hpp"
-#include "YoubotJoints.hpp"
+#include "youbot_arm_model/youbot_arm_dynamics_symbolic.h"
+#include "youbot_arm_model/youbot_arm_forward_kinematics.h"
+#include "youbot_arm_model/youbot_joints.h"
 
 #include <boost/units/systems/si.hpp>
 #include <boost/units/io.hpp>
@@ -39,7 +39,7 @@ public:
   //define functions
   bool initialize();
 
-  brics_actuator::JointTorques generate_joint_torque_msg(Eigen::VectorXd arr);
+  brics_actuator::JointTorques generateJointTorqueMsg(Eigen::VectorXd arr);
 
   int limitTorques(Eigen::VectorXd & torques);
 

@@ -1,11 +1,11 @@
 /*
- * trajserv.cpp
+ * trajtory_server.cpp
  *
  *  Created on: Sep 11, 2013
  *      Author: keiserb
  */
 
-#include "traj.hpp"
+#include "trajectory_generator/trajectory_generator.h"
 #include "trajectory_generator/JStoJS.h"
 #include "trajectory_generator/JStoCS.h"
 #include "trajectory_generator/CStoCS.h"

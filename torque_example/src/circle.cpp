@@ -68,13 +68,13 @@ int main(int argc, char **argv)
       point.positions.pop_back();
     }
     cout << "Publishing arm cmd" << endl;
-    arm_pub_pos.publish(rpg_youbot_common::generate_joint_position_msg(first_pt));
+    arm_pub_pos.publish(rpg_youbot_common::generateJointPositionMsg(first_pt));
     ros::spinOnce();
     lr.sleep();
-    arm_pub_pos.publish(rpg_youbot_common::generate_joint_position_msg(first_pt));
+    arm_pub_pos.publish(rpg_youbot_common::generateJointPositionMsg(first_pt));
     ros::spinOnce();
     lr.sleep();
-    arm_pub_pos.publish(rpg_youbot_common::generate_joint_position_msg(first_pt));
+    arm_pub_pos.publish(rpg_youbot_common::generateJointPositionMsg(first_pt));
     ros::spinOnce();
     lr.sleep();
     sleep(1);

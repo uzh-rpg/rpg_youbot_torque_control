@@ -5,7 +5,7 @@
  *      Author: keiserb
  */
 
-#include "torque.hpp"
+#include "torque_control/torque_control.h"
 #include <time.h>
 #include <ros/package.h>
 
@@ -85,7 +85,7 @@ bool TorqueController::initialize()
   return true;
 }
 
-brics_actuator::JointTorques TorqueController::generate_joint_torque_msg(Eigen::VectorXd arr)
+brics_actuator::JointTorques TorqueController::generateJointTorqueMsg(Eigen::VectorXd arr)
 {
   brics_actuator::JointTorques m_joint_torques;
   //Ros component negates torque values for joints with negative direction (all joints except joint 3)
@@ -209,7 +209,7 @@ void TorqueController::followTrajectory(const torque_control::torque_trajectoryG
       ros::shutdown();
       break;
     }
-    torque_command_pub.publish(generate_joint_torque_msg(m_torques));
+    torque_command_pub.publish(generateJointTorqueMsg(m_torques));
     ros::spinOnce();
     loop_rate.sleep();
   }
@@ -272,7 +272,7 @@ void TorqueController::stepInput()
     {
       ros::shutdown();
     }
-    torque_command_pub.publish(generate_joint_torque_msg(m_torques));
+    torque_command_pub.publish(generateJointTorqueMsg(m_torques));
     ros::spinOnce();
     loop_rate.sleep();
     k++;
@@ -320,7 +320,7 @@ void TorqueController::gravityCompensation()
   rval = limitTorques(m_torques);
   if (rval == 0)
   {
-    torque_command_pub.publish(generate_joint_torque_msg(m_torques));
+    torque_command_pub.publish(generateJointTorqueMsg(m_torques));
   }
   else
   {

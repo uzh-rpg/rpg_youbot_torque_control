@@ -16,7 +16,7 @@
 #include <brics_actuator/JointVelocities.h>
 #include <geometry_msgs/Pose.h>
 #include <iostream>
-#include "YoubotJoints.hpp"
+#include "youbot_arm_model/youbot_joints.h"
 #include <boost/units/systems/si.hpp>
 #include <boost/units/io.hpp>
 

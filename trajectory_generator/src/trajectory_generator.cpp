@@ -1,4 +1,4 @@
-#include "traj.hpp"
+#include "trajectory_generator/trajectory_generator.h"
 #include <iostream>
 
 using namespace std;

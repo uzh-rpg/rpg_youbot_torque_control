@@ -1,5 +1,5 @@
 /*
- * traj.hpp
+ * trajectory_generator.h
  *
  *  Created on: May 2, 2013
  *      Author: keiserb
@@ -14,9 +14,9 @@
 
 #include <math.h>
 
-#include "YoubotJoints.hpp"
-#include "YoubotArmFKin.hpp"
-#include "YoubotArmDynamicsSymbolic.hpp"
+#include "youbot_arm_model/youbot_joints.h"
+#include "youbot_arm_model/youbot_arm_forward_kinematics.h"
+#include "youbot_arm_model/youbot_arm_dynamics_symbolic.h"
 
 #include "ik_solver_service/SolvePreferredPitchIK.h"
 #include "ik_solver_service/SolveFullyConstrainedIKArray.h"

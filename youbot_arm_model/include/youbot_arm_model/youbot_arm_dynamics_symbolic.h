@@ -11,8 +11,8 @@
 #include <math.h>
 #include <kdl/jntarray.hpp>
 #include <Eigen/Dense>
-#include "ValuesInternet.hpp"
-#include "YoubotJoints.hpp"
+#include "youbot_arm_model/values_internet.h"
+#include "youbot_arm_model/youbot_joints.h"
 #include <fstream>
 
 inline void getM(Eigen::MatrixXd & M, Eigen::VectorXd& pos)
@@ -242,7 +242,7 @@ inline void pd_controller_Torques(Eigen::MatrixXd & Kp, Eigen::MatrixXd & Kv, Ei
 
 inline bool gainMatrices(Eigen::MatrixXd & Kp, Eigen::MatrixXd & Kv,std::string package_path)
 {
-  const char *controller_cfg_file_path = (package_path + "/Controller.cfg").c_str();
+  const char *controller_cfg_file_path = (package_path + "cfg/controller.cfg").c_str();
   std::ifstream in(controller_cfg_file_path,std::ios::in);
    std::string line;
    if (in.is_open())
@@ -263,7 +263,7 @@ inline bool gainMatrices(Eigen::MatrixXd & Kp, Eigen::MatrixXd & Kv,std::string 
    else
    {
    ROS_ERROR("File not found");
-   ROS_ERROR("Remeber to run the torque controller from the directory with the Controller.cfg file in.");
+   ROS_ERROR("Remeber to run the torque controller from the directory with the controller.cfg file in.");
      return false;
    }
 }

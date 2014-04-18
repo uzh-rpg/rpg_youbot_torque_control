@@ -14,13 +14,13 @@
 namespace rpg_youbot_common
 {
 
-double normalize_angle(double angle);
+double normalizeAngle(double angle);
 
-brics_actuator::JointPositions generate_joint_position_msg(double* joints);
+brics_actuator::JointPositions generateJointPositionMsg(double* joints);
 
-brics_actuator::JointPositions generate_gripper_position_msg(double gripper_l, double gripper_r);
+brics_actuator::JointPositions generateGripperPositionMsg(double gripper_l, double gripper_r);
 
-brics_actuator::JointVelocities generate_joint_velocity_msg(double* joints);
+brics_actuator::JointVelocities generateJointVelocityMsg(double* joints);
 
 } // rpg_youbot_common
 

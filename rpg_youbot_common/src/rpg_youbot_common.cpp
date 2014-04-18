@@ -3,7 +3,7 @@
 namespace rpg_youbot_common
 {
 
-double normalize_angle(double angle)
+double normalizeAngle(double angle)
 {
   while (angle > M_PI)
     angle -= 2 * M_PI;
@@ -13,7 +13,7 @@ double normalize_angle(double angle)
   return angle;
 }
 
-brics_actuator::JointPositions generate_joint_position_msg(double* joints)
+brics_actuator::JointPositions generateJointPositionMsg(double* joints)
 {
   brics_actuator::JointPositions joint_position_msg;
 
@@ -36,7 +36,7 @@ brics_actuator::JointPositions generate_joint_position_msg(double* joints)
   return joint_position_msg;
 }
 
-brics_actuator::JointPositions generate_gripper_position_msg(double gripper_l, double gripper_r)
+brics_actuator::JointPositions generateGripperPositionMsg(double gripper_l, double gripper_r)
 {
   brics_actuator::JointPositions gripper_position_msg;
 
@@ -62,7 +62,7 @@ brics_actuator::JointPositions generate_gripper_position_msg(double gripper_l, d
   return gripper_position_msg;
 }
 
-brics_actuator::JointVelocities generate_joint_velocity_msg(double* joints)
+brics_actuator::JointVelocities generateJointVelocityMsg(double* joints)
 {
   brics_actuator::JointVelocities joint_velocity_msg;
 
