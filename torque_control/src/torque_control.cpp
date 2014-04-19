@@ -9,6 +9,8 @@
 #include <time.h>
 #include <ros/package.h>
 
+namespace torque_control {
+
 using namespace std;
 
 TorqueController::TorqueController(ros::NodeHandle& nh, std::string name) :
@@ -524,6 +526,10 @@ bool TorqueController::brics2eigen(brics_actuator::JointPositions jpos, Eigen::V
   }
   return true;
 }
+
+} // namespace torque_control
+
+using namespace torque_control;
 
 int main(int argc, char* argv[])
 {

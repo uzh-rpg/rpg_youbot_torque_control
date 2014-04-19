@@ -9,10 +9,10 @@
 #include <boost/units/systems/si.hpp>
 #include <boost/units/io.hpp>
 
-#define DEG_TO_RAD(x) ((x) * M_PI / 180.0)
-
 namespace rpg_youbot_common
 {
+
+double deg2Rad(double angle_in_deg);
 
 double normalizeAngle(double angle);
 
@@ -22,7 +22,7 @@ brics_actuator::JointPositions generateGripperPositionMsg(double gripper_l, doub
 
 brics_actuator::JointVelocities generateJointVelocityMsg(double* joints);
 
-} // rpg_youbot_common
+} // namespace rpg_youbot_common
 
 #endif
 

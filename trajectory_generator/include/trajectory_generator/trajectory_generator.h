@@ -34,6 +34,8 @@
 #include <boost/units/systems/si.hpp>
 #include <boost/units/io.hpp>
 
+namespace trajectory_generator {
+
 class TrajectoryGenerator
 {
 public:
@@ -78,4 +80,7 @@ private:
   std::string prop_urdf_model;
   brics_actuator::JointPositions m_joint_pos;
 };
+
+} // namespace trajectory_generator
+
 #endif /* TRAJ_HPP_ */

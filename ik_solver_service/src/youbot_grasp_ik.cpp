@@ -1,6 +1,10 @@
-#include "youbot_grasp_ik.h"
+#include "ik_solver_service/youbot_grasp_ik.h"
 
-// COmpute the solution which is closest to the given configuration
+namespace ik_solver_service {
+
+using namespace rpg_youbot_common;
+
+// Compute the solution which is closest to the given configuration
 joint_positions_solution_t YoubotGraspIK::solveClosestIK(joint_positions_solution_t current_joint_positions,
                                                          geometry_msgs::Point desired_position,
                                                          geometry_msgs::Vector3 desired_normal)
@@ -311,8 +315,8 @@ double YoubotGraspIK::getMaxJointDifference(joint_positions_solution_t solution_
 // Compute the difference of the preferred gripper pitch and the gripper pitch of a given configuration
 double YoubotGraspIK::getPitchDifference(double preferred_pitch, joint_positions_solution_t solution)
 {
-  const double joint_offsets[5] = {DEG_TO_RAD(169.0), DEG_TO_RAD(65.0), DEG_TO_RAD(-146.0), DEG_TO_RAD(102.5),
-                                   DEG_TO_RAD(167.5)};
+  const double joint_offsets[5] = {deg2Rad(169.0), deg2Rad(65.0), deg2Rad(-146.0), deg2Rad(102.5),
+                                   deg2Rad(167.5)};
   double max_pitch_difference = fabs(
       preferred_pitch + M_PI / 2.0 - (solution.joints[1] - joint_offsets[1]) - (solution.joints[2] - joint_offsets[2])
           - (solution.joints[3] - joint_offsets[3]));
@@ -389,10 +393,10 @@ double YoubotGraspIK::sign(double value)
 bool YoubotGraspIK::checkSingleSolutionFeasability(joint_positions_solution_t single_solution)
 {
 
-  const double joint_min_angles[5] = {DEG_TO_RAD(-169.0), DEG_TO_RAD(-65.0), DEG_TO_RAD(-151.0), DEG_TO_RAD(-102.5),
-                                      DEG_TO_RAD(-167.5)};
-  const double joint_max_angles[5] = {DEG_TO_RAD(169.0), DEG_TO_RAD(90.0), DEG_TO_RAD(146.0), DEG_TO_RAD(102.5),
-                                      DEG_TO_RAD(167.5)};
+  const double joint_min_angles[5] = {deg2Rad(-169.0), deg2Rad(-65.0), deg2Rad(-151.0), deg2Rad(-102.5),
+                                      deg2Rad(-167.5)};
+  const double joint_max_angles[5] = {deg2Rad(169.0), deg2Rad(90.0), deg2Rad(146.0), deg2Rad(102.5),
+                                      deg2Rad(167.5)};
 
   bool feasibility = true;
   for (int i = 0; i < 5; i++)
@@ -522,8 +526,8 @@ joint_positions_solution_t YoubotGraspIK::computeSingleIKSolution(Eigen::Vector3
     }
   }
   // Add joint angle offsets
-  const double joint_offsets[5] = {DEG_TO_RAD(169.0), DEG_TO_RAD(65.0), DEG_TO_RAD(-146.0), DEG_TO_RAD(102.5),
-                                   DEG_TO_RAD(167.5)};
+  const double joint_offsets[5] = {deg2Rad(169.0), deg2Rad(65.0), deg2Rad(-146.0), deg2Rad(102.5),
+                                   deg2Rad(167.5)};
 
   single_solution.joints[0] = -single_solution.joints[0] + joint_offsets[0]; // positive rotation of joint 1 is in negative coordinate axis direction
   single_solution.joints[4] = -single_solution.joints[4] + joint_offsets[4]; // positive rotation of joint 5 is in negative coordinate axis direction
@@ -712,7 +716,7 @@ void YoubotGraspIK::calculateDegenerativeSolutions(std::vector<joint_positions_s
   Eigen::Vector3d des_position(desired_position.x, desired_position.y, desired_position.z);
 
   // loop over all pitches
-  double step_size = DEG_TO_RAD(5.0);
+  double step_size = deg2Rad(5.0);
   for (double pitch = -M_PI; pitch <= M_PI; pitch += step_size)
   {
     // loop over all four solution types
@@ -764,3 +768,5 @@ void YoubotGraspIK::calculateDegenerativeSolutions(std::vector<joint_positions_s
     }
   }
 }
+
+} // namespace ik_solver_service

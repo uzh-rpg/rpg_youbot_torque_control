@@ -7,6 +7,7 @@ find_package(catkin REQUIRED
 	message_generation
 	geometry_msgs
 	std_msgs
+	rpg_youbot_common
 )
 
 find_package(Eigen REQUIRED)
@@ -40,6 +41,7 @@ catkin_package(
 	geometry_msgs
 	std_msgs
 	message_runtime
+	rpg_youbot_common
 )
 
 include_directories(

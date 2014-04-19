@@ -3,6 +3,11 @@
 namespace rpg_youbot_common
 {
 
+double deg2Rad(double angle_in_deg)
+{
+  return (angle_in_deg * M_PI / 180.0);
+}
+
 double normalizeAngle(double angle)
 {
   while (angle > M_PI)
@@ -85,4 +90,4 @@ brics_actuator::JointVelocities generateJointVelocityMsg(double* joints)
   return joint_velocity_msg;
 }
 
-} // rpg_youbot_common
+} // namespace rpg_youbot_common

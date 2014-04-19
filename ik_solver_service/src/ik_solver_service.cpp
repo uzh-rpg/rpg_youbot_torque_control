@@ -1,4 +1,4 @@
-#include "youbot_grasp_ik.h"
+#include "ik_solver_service/youbot_grasp_ik.h"
 
 #include "ik_solver_service/SolveClosestIK.h"
 #include "ik_solver_service/SolvePreferredPitchIK.h"
@@ -8,7 +8,7 @@
 #include "ik_solver_service/FullyConstrainedReq.h"
 #include "ik_solver_service/FullyConstrainedRes.h"
 
-//YoubotGraspIK IKSolver;
+namespace ik_solver_service {
 
 bool solveClosestIK(ik_solver_service::SolveClosestIK::Request &req, ik_solver_service::SolveClosestIK::Response &res)
 {
@@ -175,6 +175,10 @@ bool solveFullyConstrainedIKArray(ik_solver_service::SolveFullyConstrainedIKArra
   return true;
 }
 
+} // namespace ik_solver_service
+
+using namespace ik_solver_service;
+
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "solve_ik_server");
@@ -194,3 +198,4 @@ int main(int argc, char **argv)
 
   return 0;
 }
+

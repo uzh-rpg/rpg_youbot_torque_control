@@ -1,6 +1,8 @@
 #include "trajectory_generator/trajectory_generator.h"
 #include <iostream>
 
+namespace trajectory_generator {
+
 using namespace std;
 /**
  * Constructs a TrajectoryGenerator class object. Requires the desired max
@@ -861,3 +863,5 @@ void TrajectoryGenerator::compareRotation(Eigen::Affine3d & start, Eigen::Affine
     start.matrix().col(0) << rot_e.col(0), 0;
   }
 }
+
+} // namespace trajectory_generator

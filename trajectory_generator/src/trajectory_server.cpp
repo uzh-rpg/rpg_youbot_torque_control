@@ -12,6 +12,8 @@
 #include "trajectory_generator/Circle.h"
 #include <iostream>
 
+namespace trajectory_generator {
+
 using namespace std;
 
 double lr; //oodl loop rate
@@ -147,6 +149,10 @@ bool Circle(trajectory_generator::Circle::Request &req, trajectory_generator::Ci
   delete traj;
   return true;
 }
+
+} // namespace trajectory_generator
+
+using namespace trajectory_generator;
 
 int main(int argc, char **argv)
 {

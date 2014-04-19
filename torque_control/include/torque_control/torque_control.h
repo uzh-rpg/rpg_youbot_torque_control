@@ -31,6 +31,8 @@
 #include <std_srvs/Empty.h>
 #include <Eigen/Dense>
 
+namespace torque_control {
+
 class TorqueController
 {
 public:
@@ -101,4 +103,7 @@ private:
   std::ofstream pdt;
   std::ofstream eft;
 };
+
+} // namespace torque_control
+
 #endif /* TORQUE_HPP_ */

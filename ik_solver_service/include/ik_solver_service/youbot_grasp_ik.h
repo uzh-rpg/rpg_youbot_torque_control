@@ -9,8 +9,11 @@
 #include <geometry_msgs/Point.h>
 #include <geometry_msgs/Vector3.h>
 
+#include "rpg_youbot_common/rpg_youbot_common.h"
+
+namespace ik_solver_service {
+
 #define ALMOST_ONE 0.99999
-#define DEG_TO_RAD(x) ((x) * M_PI / 180.0)
 
 struct joint_positions_solution_t
 {
@@ -89,5 +92,7 @@ private:
   static const double l_4_ = 0.218; // Including sensor carrier which is 1.5mm thick
 
 };
+
+} // namespace ik_solver_service
 
 #endif
