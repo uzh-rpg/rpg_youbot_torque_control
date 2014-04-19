@@ -35,7 +35,7 @@ int main(int argc, char **argv)
   double max_acc = 0.5;
   ROS_INFO("max_vel: %f \t max_acc :%f", max_vel, max_acc);
   double first_pt[5];
-  bool feasible = true;
+  bool feasible = false;
   trajectory_msgs::JointTrajectory traj, temp;
   trajectory_msgs::JointTrajectoryPoint point;
   geometry_msgs::Pose start_p, low_p1, low_p2, end_p;
@@ -88,6 +88,11 @@ int main(int argc, char **argv)
       feasible = false;
     }
   }
+  else
+  {
+    ROS_ERROR("Could not call service.");
+    return 1;
+  }
 
   cs2cs.request.start_pos = low_p1;
   cs2cs.request.end_pos = low_p2;
@@ -116,6 +121,11 @@ int main(int argc, char **argv)
       feasible = false;
     }
   }
+  else
+  {
+    ROS_ERROR("Could not call service.");
+    return 1;
+  }
 
   cs2cs.request.start_pos = low_p2;
   cs2cs.request.end_pos = end_p;
@@ -143,6 +153,11 @@ int main(int argc, char **argv)
       cout << "Second Half Not Feasible" << endl;
       feasible = false;
     }
+  }
+  else
+  {
+    ROS_ERROR("Could not call service.");
+    return 1;
   }
 
   if (feasible)
@@ -190,7 +205,7 @@ int main(int argc, char **argv)
       ROS_INFO("Action did not finish before the time out.");
     }
   }
-  // }
+
   return 0;
 }
 

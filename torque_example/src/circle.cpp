@@ -25,7 +25,7 @@ int main(int argc, char **argv)
   actionlib::SimpleActionClient<torque_control::torque_trajectoryAction> ac("torque_control", true);
 
   double first_pt[5];
-  bool feasible = true;
+  bool feasible = false;
   trajectory_msgs::JointTrajectory traj, temp;
   trajectory_msgs::JointTrajectoryPoint point;
 
@@ -53,6 +53,11 @@ int main(int argc, char **argv)
       cout << "CS 2 CS not feasible" << endl;
     }
 
+  }
+  else
+  {
+    ROS_ERROR("Could not call service.");
+    return 1;
   }
 
   //torque control
@@ -103,6 +108,7 @@ int main(int argc, char **argv)
       ROS_INFO("Action did not finish before the time out.");
     }
   }
+
   return 0;
 }
 
