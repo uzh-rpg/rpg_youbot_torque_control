@@ -185,11 +185,11 @@ int main(int argc, char **argv)
   ros::NodeHandle n;
 
   ros::ServiceServer solve_closest_ik_service = n.advertiseService("solve_closest_ik", solveClosestIK);
-  ros::ServiceServer solve_preferred_pitch_ik_service = n.advertiseService("solvePreferredPitchIK",
+  ros::ServiceServer solve_preferred_pitch_ik_service = n.advertiseService("solve_preferred_pitch_ik",
                                                                            solvePreferredPitchIK);
   ros::ServiceServer solve_preferred_type_ik_service = n.advertiseService("solve_preferred_type_ik",
                                                                           solvePreferredTypeIK);
-  ros::ServiceServer solve_fully_constrained_ik_service = n.advertiseService("solveFullyConstrainedIK",
+  ros::ServiceServer solve_fully_constrained_ik_service = n.advertiseService("solve_fully_constrained_ik",
                                                                              solveFullyConstrainedIK);
   ros::ServiceServer solve_fully_constrained_ik_service_array = n.advertiseService("solve_fully_constrained_ik_array",
                                                                                    solveFullyConstrainedIKArray);
