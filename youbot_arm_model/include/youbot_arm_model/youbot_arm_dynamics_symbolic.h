@@ -242,7 +242,7 @@ inline void pd_controller_Torques(Eigen::MatrixXd & Kp, Eigen::MatrixXd & Kv, Ei
 
 inline bool gainMatrices(Eigen::MatrixXd & Kp, Eigen::MatrixXd & Kv,std::string package_path)
 {
-  const char *controller_cfg_file_path = (package_path + "cfg/controller.cfg").c_str();
+  const char *controller_cfg_file_path = (package_path + "/cfg/controller.cfg").c_str();
   std::ifstream in(controller_cfg_file_path,std::ios::in);
    std::string line;
    if (in.is_open())
@@ -262,8 +262,7 @@ inline bool gainMatrices(Eigen::MatrixXd & Kp, Eigen::MatrixXd & Kv,std::string 
    }
    else
    {
-   ROS_ERROR("File not found");
-   ROS_ERROR("Remeber to run the torque controller from the directory with the controller.cfg file in.");
+     ROS_ERROR("File controller.cfg not found in %s", controller_cfg_file_path);
      return false;
    }
 }
