@@ -153,7 +153,8 @@ void TorqueController::jointstateCallback(const sensor_msgs::JointState::ConstPt
   }
   else
   {
-    ROS_INFO("NO JOINT STATES FOR YOUBOT ARM RECEIVED");
+    // This will be the case e.g. if we receive a base message
+    //ROS_INFO("NO JOINT STATES FOR YOUBOT ARM RECEIVED");
   }
 }
 
