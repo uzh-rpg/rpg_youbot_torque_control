@@ -11,6 +11,7 @@ find_package(catkin REQUIRED
     brics_actuator
     trajectory_msgs
     message_generation
+    cmake_modules
 )
 
 find_package(Eigen REQUIRED)

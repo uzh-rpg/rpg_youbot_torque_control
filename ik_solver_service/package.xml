@@ -16,6 +16,7 @@
   <build_depend>std_msgs</build_depend>
   <build_depend>message_generation</build_depend>
   <build_depend>rpg_youbot_common</build_depend>
+  <build_depend>cmake_modules</build_depend>
   
   <run_depend>geometry_msgs</run_depend>
   <run_depend>std_msgs</run_depend>

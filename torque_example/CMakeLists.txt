@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   torque_control
   trajectory_generator
   message_generation
+  cmake_modules
 )
 
 find_package(Eigen REQUIRED)

@@ -8,6 +8,7 @@ find_package(catkin REQUIRED
 	geometry_msgs
 	std_msgs
 	rpg_youbot_common
+	cmake_modules
 )
 
 find_package(Eigen REQUIRED)

@@ -14,6 +14,7 @@ find_package(catkin REQUIRED
 	youbot_arm_model
 	std_srvs
 	message_generation
+	cmake_modules
 )
 
 find_package(Eigen REQUIRED)
