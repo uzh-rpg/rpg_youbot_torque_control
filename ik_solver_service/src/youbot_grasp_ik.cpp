@@ -584,12 +584,16 @@ joint_positions_solution_t YoubotGraspIK::computeExactPitchSolution(double prefe
   // y-axis of intermediate frame which is rotatet around z
   Eigen::Vector3d y_inter(-sin(phi), cos(phi), 0);
 
-  // Roll of the gripper making its y-axis coincide with the desired normal given the preferred pitch
-  double roll = acos(y_inter.dot(des_normal) / (y_inter.norm() * des_normal.norm()));
-
-  if (des_normal.dot(x_gripper.cross(y_inter)) < 0)
+  double roll = 0.0;
+  if (fabs(y_inter.dot(des_normal)) <= ALMOST_ONE) // M_PI is not possible anyways
   {
-    roll = normalizeAngle(-roll);
+    // Roll of the gripper making its y-axis coincide with the desired normal given the preferred pitch
+    roll = acos(y_inter.dot(des_normal) / (y_inter.norm() * des_normal.norm()));
+
+    if (des_normal.dot(x_gripper.cross(y_inter)) < 0)
+    {
+      roll = normalizeAngle(-roll);
+    }
   }
 
   // Compute all the 8 possible solutions and return the first feasible one we find
